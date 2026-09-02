@@ -21,11 +21,11 @@ export const links = [
   },
   {
     title: 'Magazines',
-    path: '/magazines',
+    path: '/magazines/',
   },
   {
     title: 'Le Club',
-    path: '/club',
+    path: '/club/',
   },
 ]
 

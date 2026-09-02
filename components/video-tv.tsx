@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Play, Tv } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import Image from 'next/image'
+import logoTv from '../app/images/mianTv.png'
 
 // Structure de la playlist (remplacer par vos vraies données/API)
 const tvPlaylist = [
@@ -44,8 +45,14 @@ export function VideoTvSection() {
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* En-tête de section */}
         <div className='flex items-center gap-3 mb-10'>
-          <div className='p-2 bg-agro-green rounded-md text-white'>
-            <Tv className='h-5 w-5' />
+          <div className='p-2  rounded-md text-white'>
+            <Image
+              src={logoTv}
+              alt='Logo Mian TV'
+              className='h-auto w-auto rounded-md'
+              width={50}
+              height={50}
+            />
           </div>
           <div>
             <h2 className='font-lora text-xl md:text-3xl font-bold tracking-tight'>

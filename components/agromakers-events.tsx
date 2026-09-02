@@ -1,7 +1,6 @@
-import { CalendarX2 } from 'lucide-react'
 import { AgroEvent } from '@/lib/wordpress'
 import { formatHtml } from '@/lib/utils'
-import { Calendar, MapPin } from 'lucide-react'
+import { Calendar, MapPin, CalendarX2 } from 'lucide-react'
 
 function formatEventDate(dateStr: string, timeStr: string) {
   const date = new Date(`${dateStr}T${timeStr || '00:00'}`)

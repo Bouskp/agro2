@@ -31,6 +31,7 @@ interface ACF {
   lien_: string
   image: number
   numero_magazine: number
+  lien_flipbook?: string
 }
 
 // Media types
@@ -273,6 +274,7 @@ export interface FilterBarProps {
 export interface Agromag {
   id: number
   slug: string
+  date: string
   title: { rendered: string }
   link: string
   magazine_meta: {
@@ -284,6 +286,8 @@ export interface Agromag {
     poster_url: string | null
     poster_position: string
   }
+  _embedded?: PostEmbedded
+  acf: ACF
 }
 
 export interface AgroEvent {
