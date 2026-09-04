@@ -1,5 +1,4 @@
 import { EventsSection } from '@/components/agromakers-events'
-import { AgroMakersClub } from '@/components/Club'
 import { LatestMagazine } from '@/components/LatestMagazine'
 import HeroSlider from '@/components/SliderComponent'
 import { VideoTvSection } from '@/components/video-tv'
@@ -15,7 +14,6 @@ export default async function Home() {
       <LatestMagazine />
       <VideoTvSection />
       <EventsSection events={events} />
-      <AgroMakersClub />
     </>
   )
 }

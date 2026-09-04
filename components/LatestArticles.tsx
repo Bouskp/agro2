@@ -48,7 +48,7 @@ export async function LatestArticles({
                 </span>
 
                 <h3
-                  className='font-lora text-sm font-bold mt-1 text-agro-text leading-snug line-clamp-2 group-hover:text-agro-green-dark transition-colors'
+                  className='font-lora text-sm font-bold mt-1 text-agro-text leading-snug line-clamp-2 group-hover:text-agro-orange transition-colors'
                   dangerouslySetInnerHTML={{
                     __html: formatHtml(post.title.rendered),
                   }}

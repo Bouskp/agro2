@@ -1,6 +1,7 @@
 import { AgroEvent } from '@/lib/wordpress'
 import { formatHtml } from '@/lib/utils'
 import { Calendar, MapPin, CalendarX2 } from 'lucide-react'
+import Image from 'next/image'
 
 function formatEventDate(dateStr: string, timeStr: string) {
   const date = new Date(`${dateStr}T${timeStr || '00:00'}`)
@@ -33,10 +34,10 @@ export function EventsSection({ events }: { events: AgroEvent[] }) {
     <section className='w-full bg-agro-background py-16 md:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <div className='mb-10'>
-          <h2 className='font-lora text-2xl md:text-3xl font-bold tracking-tight text-agro-text'>
-            Événements à venir
+          <h2 className='font-lora text-2xl md:text-3xl font-bold tracking-tight text-agro-text uppercase'>
+            Événements
           </h2>
-          <p className='font-arial text-sm text-agro-text-secondary mt-1'>
+          <p className='font-arial text-base text-agro-text-secondary mt-1'>
             Rencontres, formations et salons Agromakers.
           </p>
         </div>
@@ -52,11 +53,12 @@ export function EventsSection({ events }: { events: AgroEvent[] }) {
               >
                 {event._embedded?.['wp:featuredmedia']?.[0] && (
                   <div className='relative aspect-[16/9] w-full'>
-                    <img
+                    <Image
                       src={event._embedded['wp:featuredmedia'][0].source_url}
                       alt={formatHtml(event.title.rendered)}
                       className='object-cover w-full h-full'
                       loading='lazy'
+                      fill
                     />
                   </div>
                 )}

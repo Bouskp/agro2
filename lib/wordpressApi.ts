@@ -669,14 +669,35 @@ export async function getUpcomingEvents(
   return events.filter((event) => event.meta.event_date >= today)
 }
 
-export async function getEventBySlug(slug: string): Promise<Event | undefined> {
-  const events = await wordpressFetchGraceful<Event[]>(
+export async function getEventBySlug(
+  slug: string,
+): Promise<AgroEvent | undefined> {
+  const events = await wordpressFetchGraceful<AgroEvent[]>(
     '/wp-json/wp/v2/events',
     [],
     { slug, _embed: true },
     ['wordpress', 'events'],
   )
   return events[0]
+}
+
+export async function getPastEvents(
+  perPage: number = 20,
+): Promise<AgroEvent[]> {
+  const { data: events } = await wordpressFetchPaginatedGraceful<AgroEvent>(
+    '/wp-json/wp/v2/events',
+    {
+      _embed: true,
+      per_page: perPage,
+      orderby: 'meta_value',
+      meta_key: 'event_date',
+      order: 'desc',
+    },
+    ['wordpress', 'events'],
+  )
+
+  const today = new Date().toISOString().split('T')[0]
+  return events.filter((event) => event.meta.event_date < today)
 }
 
 // Pour generateStaticParams sur les pages d'événements individuelles

@@ -11,10 +11,7 @@ export const links = [
     title: 'Accueil',
     path: '/',
   },
-  {
-    title: 'A propos',
-    path: '#apropos',
-  },
+
   {
     title: 'Actualité',
     path: '/actualite',
@@ -24,8 +21,8 @@ export const links = [
     path: '/magazines/',
   },
   {
-    title: 'Le Club',
-    path: '/club/',
+    title: 'Événements',
+    path: '/events',
   },
 ]
 

@@ -67,7 +67,7 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
                   className='block group w-fit'
                 >
                   <h1
-                    className='font-lora text-2xl md:text-3xl lg:text-titre font-bold leading-tight text-white group-hover:text-agro-orange-light transition-colors'
+                    className='font-georgia text-2xl md:text-3xl lg:text-titre font-bold leading-tight text-white group-hover:text-agro-orange-light transition-colors'
                     dangerouslySetInnerHTML={{
                       __html: formatHtml(post.title.rendered),
                     }}

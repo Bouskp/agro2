@@ -1,36 +1,38 @@
 import Link from 'next/link'
 import { Mail, MapPin, Phone } from 'lucide-react'
-import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa6'
+import { FaFacebook, FaWhatsapp, FaLinkedin, FaYoutube } from 'react-icons/fa6'
 import { links } from '@/lib/utils'
-
-const exploreLinks = [...links, { title: 'Newsletter', path: '/newsletter' }]
-
-const helpLinks = [
-  { href: '/faq', label: 'Questions fréquentes' },
-  { href: '/conditions', label: 'Conditions générales' },
-  { href: '/confidentialite', label: 'Confidentialité' },
-]
+import logo from '../app/images/logo.png'
+import Image from 'next/image'
 
 export default function Footer() {
   return (
-    <footer className='bg-black text-white'>
+    <footer className='bg-agro-charcoal text-white'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10'>
         <div className='grid grid-cols-1 gap-10 md:grid-cols-4'>
           {/* Bloc marque */}
-          <div className='md:col-span-1'>
+          <div className='md:col-span-2'>
             <Link
               href='/'
-              className='uppercase font-lora text-2xl font-bold tracking-tight'
+              className='relative h-10 w-36 sm:h-16 sm:w-52 shrink-0 block'
             >
-              <span className=''>Agro</span>
-              <span className='text-agro-green'>m</span>
-              <span className='text-agro-orange'>akers</span>
+              <Image
+                src={logo}
+                alt='logo Agromakers'
+                className='object-contain object-left'
+                fill
+                priority
+              />
             </Link>
-            <p className='font-lora text-sm text-agro-text-muted mt-4 leading-relaxed max-w-[26ch] group hover:text-white'>
-              AgroMakers est une plateforme dédiée à la transformation de
-              l’agriculture africaine. Elle informe, connecte et accompagne les
-              acteurs du secteur à travers contenus, analyses, événements et
-              opportunités pour accélérer des projets durables et performants.
+            <p className='font-lora text-sm text-agro-text-muted mt-4 leading-relaxed hover:text-white transition-colors'>
+              AgroMakers est le média business de l’agriculture africaine. À
+              travers l’actualité, des analyses, des enquêtes, des interviews et
+              des contenus de référence, nous suivons et décryptons les
+              dynamiques qui façonnent l’économie agricole du continent, avec
+              une ambition : offrir aux acteurs du secteur l’information dont
+              ils ont besoin pour comprendre les marchés, identifier les
+              opportunités et anticiper les transformations de l’agriculture
+              africaine.
             </p>
             <div className='flex gap-3 mt-6'>
               <a
@@ -38,28 +40,33 @@ export default function Footer() {
                 aria-label='Facebook'
                 className='rounded-full border border-white/15 p-2 hover:bg-agro-green transition-colors'
                 target='_blank'
+                rel='noopener noreferrer'
               >
                 <FaFacebook className='h-4 w-4' />
               </a>
               <a
-                href='https://instagram.com'
-                aria-label='Instagram'
+                href='https://whatsapp.com/channel/0029VbCR4qX0rGiFZyuq8Z0o'
+                aria-label='WhatsApp'
                 className='rounded-full border border-white/15 p-2 hover:bg-agro-green transition-colors'
+                target='_blank'
+                rel='noopener noreferrer'
               >
-                <FaInstagram className='h-4 w-4' />
+                <FaWhatsapp className='h-4 w-4' />
               </a>
               <a
-                href='https://www.linkedin.com/company/agromakers'
+                href='https://www.linkedin.com/company/agromakers-africa/'
                 aria-label='LinkedIn'
                 className='rounded-full border border-white/15 p-2 hover:bg-agro-green transition-colors'
                 target='_blank'
+                rel='noopener noreferrer'
               >
                 <FaLinkedin className='h-4 w-4' />
               </a>
               <a
                 href='https://www.youtube.com/playlist?list=PLJPMVpGSbEkEUZMvW4ljawX4lpvJgl4V2'
                 target='_blank'
-                aria-label='LinkedIn'
+                rel='noopener noreferrer'
+                aria-label='YouTube'
                 className='rounded-full border border-white/15 p-2 hover:bg-agro-green transition-colors'
               >
                 <FaYoutube className='h-4 w-4' />
@@ -71,30 +78,13 @@ export default function Footer() {
           <div>
             <h3 className='font-arial text-sm font-bold mb-4'>Explorer</h3>
             <ul className='space-y-3'>
-              {exploreLinks.map((item) => (
+              {links.map((item) => (
                 <li key={item.path}>
                   <Link
                     href={item.path}
                     className='font-arial text-sm text-agro-text-muted hover:text-agro-orange transition-colors'
                   >
                     {item.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Aide */}
-          <div>
-            <h3 className='font-arial text-sm font-bold mb-4'>Aide</h3>
-            <ul className='space-y-3'>
-              {helpLinks.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className='font-arial text-sm text-agro-text-muted hover:text-agro-orange transition-colors'
-                  >
-                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -111,20 +101,21 @@ export default function Footer() {
               </li>
               <li className='flex items-center gap-2'>
                 <Phone className='h-4 w-4 shrink-0' />
+                {/* ⚠️ Numéro à confirmer : href et texte affiché différaient dans l'original */}
                 <a
                   href='tel:+2250708734964'
                   className='hover:text-agro-orange transition-colors'
                 >
-                  +225 07 14 13 2574
+                  +225 07 08 73 49 64
                 </a>
               </li>
               <li className='flex items-center gap-2'>
                 <Mail className='h-4 w-4 shrink-0' />
                 <a
-                  href='mailto:contact@agromakers.com'
+                  href='mailto:infos@mianmedia.com'
                   className='hover:text-agro-orange transition-colors'
                 >
-                  contact@agromakers.com
+                  infos@mianmedia.com
                 </a>
               </li>
             </ul>

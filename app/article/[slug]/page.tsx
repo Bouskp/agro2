@@ -90,7 +90,7 @@ export default async function ArticlePage({
 
           {/* Contenu de l'article */}
           <div
-            className='prose prose-neutral max-w-none mt-10 font-georgia text-lg text-agro-text prose-headings:font-lora prose-a:text-agro-green-dark prose-img:rounded-lg [&_p]:my-6'
+            className='prose prose-neutral max-w-none mt-10 font-arial text-lg text-agro-text prose-headings:font-lora prose-a:text-agro-green-dark prose-img:rounded-lg [&_p]:my-3'
             dangerouslySetInnerHTML={{
               __html: formatHtml(
                 post.content.rendered.replaceAll('Thom Biakpa', ''),

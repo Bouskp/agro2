@@ -18,30 +18,40 @@ import {
   SheetTrigger,
   SheetTitle,
 } from '@/components/ui/sheet'
-import { links } from '@/lib/utils'
+import { cn, links } from '@/lib/utils'
 import logo from '../app/images/logo.png'
-
-// Découpage de tes liens en gauche/droite (adapte selon ta logique)
-const leftNavItems = links.slice(0, Math.ceil(links.length / 2))
-const rightNavItems = links.slice(Math.ceil(links.length / 2))
 
 export default function Navbar() {
   return (
-    <header className='border-b bg-agro-background w-full'>
-      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between md:grid md:grid-cols-3'>
-        {/* BLOC GAUCHE (Desktop) */}
-        <div className='hidden md:flex justify-center'>
+    <header className='sticky top-0 z-50 bg-agro-charcoal w-full'>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between'>
+        {/* LOGO À GAUCHE — ratio réel ~3.1:1 après recadrage */}
+        <Link href='/' className='relative h-12 w-12 sm:h-16 sm:w-52 shrink-0'>
+          <Image
+            src={logo}
+            alt='logo Agromakers'
+            className='object-contain object-left'
+            fill
+            priority
+          />
+        </Link>
+
+        {/* LIENS + CTA À DROITE (Desktop) */}
+        <div className='hidden md:flex items-center gap-6'>
           <NavigationMenu>
             <NavigationMenuList className='gap-1'>
-              {leftNavItems.map((item) => (
+              {links.map((item) => (
                 <NavigationMenuItem key={item.path}>
                   <NavigationMenuLink
                     asChild
-                    className={navigationMenuTriggerStyle()}
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      'hover:bg-agro-green hover:text-agro-white',
+                    )}
                   >
                     <Link
                       href={item.path}
-                      className='text-xl font-lora text-agro-text font-bold'
+                      className='text-xl font-lora text-white font-medium'
                     >
                       {item.title}
                     </Link>
@@ -50,56 +60,18 @@ export default function Navbar() {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
-        </div>
-
-        {/* BLOC CENTRAL : LOGO */}
-        <div className='flex md:justify-center'>
-          <Link
-            href='/'
-            className='relative h-25 w-25 whitespace-nowrap whitespace-nowrap'
-          >
-            <Image
-              src={logo}
-              alt='logo Agromakers'
-              className='object-contain h-14 w-auto'
-              fill
-              priority
-            />
-          </Link>
-        </div>
-
-        {/* BLOC DROITE (Desktop) */}
-        <div className='hidden md:flex items-center justify-start gap-4'>
-          <NavigationMenu>
-            <NavigationMenuList className='gap-1'>
-              {rightNavItems.map((item) => (
-                <NavigationMenuItem key={item.path}>
-                  <NavigationMenuLink
-                    asChild
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    <Link
-                      href={item.path}
-                      className='text-xl font-lora text-agro-text'
-                    >
-                      {item.title}
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
-
-          <Button asChild size='lg' className='font-lora text-lg'>
-            <Link href='/newsletter'>Newsletter</Link>
-          </Button>
         </div>
 
         {/* NAVIGATION MOBILE */}
         <div className='flex md:hidden'>
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant='ghost' size='icon' aria-label='Ouvrir le menu'>
+              <Button
+                variant='ghost'
+                size='icon'
+                aria-label='Ouvrir le menu'
+                className='text-white hover:bg-white/10'
+              >
                 <Menu className='h-6 w-6' />
               </Button>
             </SheetTrigger>
@@ -125,12 +97,6 @@ export default function Navbar() {
                     </Link>
                   ))}
                 </nav>
-              </div>
-
-              <div className='border-t pt-4 mt-auto mb-4'>
-                <Button asChild className='w-full text-xl py-5'>
-                  <Link href='/newsletter'>Newsletter</Link>
-                </Button>
               </div>
             </SheetContent>
           </Sheet>

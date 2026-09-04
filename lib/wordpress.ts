@@ -295,6 +295,8 @@ export interface AgroEvent {
   title: { rendered: string }
   excerpt: { rendered: string }
   slug: string
+  event_gallery_urls?: string[]
+
   meta: {
     event_date: string
     event_time: string

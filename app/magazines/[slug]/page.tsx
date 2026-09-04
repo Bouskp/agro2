@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Download, Calendar } from 'lucide-react'
+import { Download } from 'lucide-react'
 import { getAgromagByNum, getAllAgromagSlug } from '@/lib/wordpressApi'
-import { formatHtml, formatMediaDate } from '@/lib/utils'
+import { formatHtml } from '@/lib/utils'
 import { FlipbookViewer } from '@/components/Flipbook'
 
 export default async function MagazinePage({

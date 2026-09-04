@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Play, Tv } from 'lucide-react'
+import { Play } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import Image from 'next/image'
 import logoTv from '../app/images/mianTv.png'
@@ -9,7 +9,7 @@ import logoTv from '../app/images/mianTv.png'
 // Structure de la playlist (remplacer par vos vraies données/API)
 const tvPlaylist = [
   {
-    id: '1',
+    id: '3',
     title:
       'Créer une entreprise agricole en Afrique : ce qu’il faut vraiment savoir - Avec Daniel Oulaï',
     duration: '1:50:22',
@@ -27,7 +27,7 @@ const tvPlaylist = [
       'Dans cet épisode 2 d’AgroMakers, nous recevons Axel Emmanuel, chocolatier ivoirien engagé dans la transformation locale du cacao.Dans un pays premier producteur mondial de cacao, pourquoi la valeur ajoutée reste-t-elle encore majoritairement captée à l’étranger ? Comment construire une marque made in Côte d’Ivoire ? Quels sont les défis techniques, industriels et commerciaux de la transformation locale ? AgroMakers met en lumière celles et ceux qui bâtissent l’agriculture et l’agro-industrie africaines autrement.',
   },
   {
-    id: '3',
+    id: '1',
     title: 'AgroMakers Ep 1 - Fabrice Tamegnon',
     duration: '54:48',
     youtubeId: 'Io3JQnQQ54k',
@@ -55,8 +55,8 @@ export function VideoTvSection() {
             />
           </div>
           <div>
-            <h2 className='font-lora text-xl md:text-3xl font-bold tracking-tight'>
-              MianTv — La Playlist AgroMakers
+            <h2 className='font-georgia text-xl md:text-3xl font-bold tracking-tight'>
+              AgroMakers - Le podcast, à retrouver sur Mian TV
             </h2>
             <p className='font-arial text-white/60 text-sm mt-1 hidden md:block'>
               AgroMakers est une émission de Mian TV dédiée à l’agriculture, à
@@ -86,12 +86,14 @@ export function VideoTvSection() {
 
               <div className='mt-6'>
                 <span className='font-arial text-xs font-bold text-agro-orange uppercase tracking-widest bg-agro-orange/10 px-2.5 py-1 rounded-full'>
-                  En cours de diffusion
+                  {parseInt(currentVideo.id, 10) === tvPlaylist.length
+                    ? 'Dernier épisode'
+                    : `Épisode ${currentVideo.id}`}
                 </span>
                 <h3 className='font-lora text-xl sm:text-2xl font-bold mt-3 text-white leading-tight'>
                   {currentVideo.title}
                 </h3>
-                <p className='font-georgia text-white/70 text-sm sm:text-base mt-3 leading-relaxed max-w-3xl'>
+                <p className='font-arial text-white/70 text-sm sm:text-base mt-3 leading-relaxed max-w-3xl'>
                   {currentVideo.description}
                 </p>
               </div>
@@ -149,7 +151,7 @@ export function VideoTvSection() {
 
                       <div className='flex-1 min-w-0 pr-1'>
                         <h4
-                          className={`font-arial text-sm font-semibold leading-snug line-clamp-2 transition-colors ${
+                          className={`font-lora text-sm font-semibold leading-snug line-clamp-2 transition-colors ${
                             isPlaying
                               ? 'text-agro-orange-light'
                               : 'text-white/90'

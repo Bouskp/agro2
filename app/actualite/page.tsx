@@ -6,6 +6,8 @@ import { formatHtml, formatMediaDate } from '@/lib/utils'
 
 const PER_PAGE = 20
 
+export const revalidate = 3600 // 1 hour
+
 export default async function ArticlesArchivePage({
   searchParams,
 }: {
@@ -25,11 +27,14 @@ export default async function ArticlesArchivePage({
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* En-tête */}
         <div className='mb-12'>
-          <h1 className='font-lora text-3xl md:text-4xl font-bold tracking-tight text-agro-text'>
+          <h1 className='font-lora text-2xl md:text-3xl font-bold tracking-tight text-agro-text uppercase'>
             Tous les articles
           </h1>
           <p className='font-arial text-sm text-agro-text-secondary mt-2'>
-            {total} article{total > 1 ? 's' : ''} publié{total > 1 ? 's' : ''}
+            Des articles fiables, pédagogiques et tournés vers les solutions
+            pour accompagner les décideurs, les entrepreneurs, les
+            investisseurs, les chercheurs et tous les acteurs engagés dans la
+            transformation de l'agriculture africaine.
           </p>
         </div>
 
@@ -73,14 +78,14 @@ export default async function ArticlesArchivePage({
                       </span>
 
                       <h2
-                        className='font-lora text-lg font-bold mt-2 text-agro-text leading-snug group-hover:text-agro-green-dark transition-colors line-clamp-2'
+                        className='font-lora text-lg font-bold mt-2 text-agro-text leading-snug group-hover:text-agro-orange transition-colors line-clamp-2'
                         dangerouslySetInnerHTML={{
                           __html: formatHtml(post.title.rendered),
                         }}
                       />
 
                       <p
-                        className='font-georgia text-sm text-agro-text-secondary mt-3 line-clamp-3'
+                        className='font-arial text-sm text-agro-text-secondary mt-3 line-clamp-3'
                         dangerouslySetInnerHTML={{
                           __html: formatHtml(post.excerpt.rendered),
                         }}
@@ -105,7 +110,7 @@ export default async function ArticlesArchivePage({
               className={`flex items-center justify-center w-10 h-10 rounded-full border border-agro-border transition-colors ${
                 currentPage === 1
                   ? 'pointer-events-none opacity-40'
-                  : 'hover:bg-agro-green hover:text-white hover:border-agro-green'
+                  : 'hover:bg-agro-orange hover:text-white hover:border-agro-orange'
               }`}
             >
               <ChevronLeft className='h-4 w-4' />
@@ -125,8 +130,8 @@ export default async function ArticlesArchivePage({
                     href={`/actualite?page=${p}`}
                     className={`flex items-center justify-center w-10 h-10 rounded-full font-arial text-sm transition-colors ${
                       p === currentPage
-                        ? 'bg-agro-green text-white'
-                        : 'border border-agro-border text-agro-text hover:bg-agro-green/10'
+                        ? 'bg-agro-orange text-white'
+                        : 'border border-agro-border text-agro-text hover:bg-agro-orange/10'
                     }`}
                   >
                     {p}
@@ -140,7 +145,7 @@ export default async function ArticlesArchivePage({
               className={`flex items-center justify-center w-10 h-10 rounded-full border border-agro-border transition-colors ${
                 currentPage === totalPages
                   ? 'pointer-events-none opacity-40'
-                  : 'hover:bg-agro-green hover:text-white hover:border-agro-green'
+                  : 'hover:bg-agro-orange hover:text-white hover:border-agro-orange'
               }`}
             >
               <ChevronRight className='h-4 w-4' />

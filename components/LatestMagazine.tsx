@@ -4,7 +4,7 @@ import { ArrowRight, Download } from 'lucide-react'
 import { getAllAgromags } from '@/lib/wordpressApi' // adaptez le chemin
 
 export async function LatestMagazine() {
-  const { data: magazines } = await getAllAgromags(1, 1) // le plus récent seulement
+  const { data: magazines } = await getAllAgromags(1, 1)
   const magazine = magazines[0]
 
   if (!magazine) return null
@@ -16,7 +16,7 @@ export async function LatestMagazine() {
       Changement du fond : bg-gray-50/70 crée un contraste doux et premium.
       Les bordures horizontales ancrent proprement la section.
     */
-    <section className='w-full bg-gray-50/70 border-y border-gray-200/60 py-16 md:py-24'>
+    <section className='w-full bg-gray-50/70 border-y border-gray-200/60 py-8 md:py-12'>
       <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8'>
         <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center'>
           {/* ─── COUVERTURE ─── */}
@@ -43,7 +43,7 @@ export async function LatestMagazine() {
 
           {/* ─── CONTENU ─── */}
           <div className='lg:col-span-7 flex flex-col justify-center'>
-            <span className='text-[10px] font-sans font-medium uppercase tracking-[0.14em] text-agro-orange mb-3 block'>
+            <span className='text-[10px] font-arial font-medium uppercase tracking-[0.14em] text-agro-orange mb-3 block'>
               Dernier Numéro — N°{meta.issue}
             </span>
 
@@ -51,17 +51,17 @@ export async function LatestMagazine() {
               {meta.titre_magazine}
             </h2>
 
-            <p className='text-gray-600 text-sm sm:text-base font-light leading-relaxed mb-8'>
+            <p className='text-gray-600 text-sm sm:text-base font-light leading-relaxed mb-8 font-arial'>
               {meta.description}
             </p>
 
             {/* Sommaire (Adapté pour se détacher sur le fond gris clair) */}
             <div className='border-t border-b border-gray-200/80 mb-8 py-4'>
-              <p className='text-[10px] font-sans font-bold uppercase tracking-[0.14em] text-gray-400 mb-3'>
+              <p className='text-[10px] font-georgia font-bold uppercase tracking-[0.14em] text-gray-400 mb-3'>
                 Au sommaire de cette édition
               </p>
               <div
-                className='font-serif font-light text-neutral-800 text-base leading-relaxed [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-2 [&_li]:text-neutral-700 hover:[&_li]:text-black transition-colors'
+                className='font-arial font-light text-neutral-800 text-base leading-relaxed [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-2 [&_li]:text-neutral-700 hover:[&_li]:text-black transition-colors'
                 dangerouslySetInnerHTML={{ __html: meta.sommaire_html }}
               />
             </div>
