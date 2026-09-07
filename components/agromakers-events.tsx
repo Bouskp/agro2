@@ -1,6 +1,6 @@
 import { AgroEvent } from '@/lib/wordpress'
 import { formatHtml } from '@/lib/utils'
-import { Calendar, MapPin, CalendarX2, Clock } from 'lucide-react'
+import { MapPin, CalendarX2, Clock } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 

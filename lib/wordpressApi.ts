@@ -6,7 +6,6 @@ import type {
   Page,
   Author,
   FeaturedMedia,
-  Magazine,
   Agromag,
   AgroEvent,
 } from './wordpress.ts'
