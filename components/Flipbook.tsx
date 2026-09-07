@@ -3,7 +3,7 @@ export function FlipbookViewer({ url }: { url?: string }) {
 
   return (
     <div className='w-full max-w-4xl mx-auto mt-8'>
-      <div className='relative w-full aspect-[4/3] rounded-lg overflow-hidden shadow-lg border border-agro-border bg-agro-surface'>
+      <div className='relative w-full aspect-[4/3]  rounded-lg overflow-hidden shadow-lg border border-agro-border bg-agro-surface'>
         <iframe
           src={url}
           className='absolute inset-0 w-full h-full'

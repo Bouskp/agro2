@@ -18,7 +18,7 @@ export const links = [
   },
   {
     title: 'Magazines',
-    path: '/magazines/',
+    path: '/magazines',
   },
   {
     title: 'Événements',

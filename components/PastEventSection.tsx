@@ -50,12 +50,12 @@ export function PastEventsSection({ events }: { events: AgroEvent[] }) {
                   <div className='flex items-center gap-3 font-arial text-xs text-agro-text-muted'>
                     <span className='flex items-center gap-1'>
                       <Calendar className='h-3.5 w-3.5' />
-                      {formatEventDate(event.meta.event_date)}
+                      {formatEventDate(event.event_meta.event_date)}
                     </span>
-                    {event.meta.event_location && (
+                    {event.event_meta.event_location && (
                       <span className='flex items-center gap-1'>
                         <MapPin className='h-3.5 w-3.5' />
-                        {event.meta.event_location}
+                        {event.event_meta.event_location}
                       </span>
                     )}
                   </div>

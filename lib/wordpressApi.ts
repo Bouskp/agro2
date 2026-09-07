@@ -139,6 +139,7 @@ async function wordpressFetchPaginated<T>(
   }
 
   const url = `${baseUrl}${path}${query ? `?${querystring.stringify(query)}` : ''}`
+  console.log(url)
 
   const response = await fetch(url, {
     method: 'GET',
@@ -666,7 +667,7 @@ export async function getUpcomingEvents(
   )
 
   const today = new Date().toISOString().split('T')[0]
-  return events.filter((event) => event.meta.event_date >= today)
+  return events.filter((event) => event.event_meta.event_date >= today)
 }
 
 export async function getEventBySlug(
@@ -697,7 +698,7 @@ export async function getPastEvents(
   )
 
   const today = new Date().toISOString().split('T')[0]
-  return events.filter((event) => event.meta.event_date < today)
+  return events.filter((event) => event.event_meta.event_date < today)
 }
 
 // Pour generateStaticParams sur les pages d'événements individuelles

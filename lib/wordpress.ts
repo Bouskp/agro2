@@ -297,11 +297,14 @@ export interface AgroEvent {
   slug: string
   event_gallery_urls?: string[]
 
-  meta: {
+  event_meta: {
+    titre_evenement: string
+    description: string
     event_date: string
     event_time: string
     event_location: string
-    event_link: string
+    event_link: string | null
+    poster_url: string
   }
   _embedded?: {
     'wp:featuredmedia'?: [{ source_url: string }]

@@ -1,12 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import {
-  ChevronLeft,
-  ChevronRight,
-  BookOpen,
-  ArrowRight,
-  Download,
-} from 'lucide-react'
+import { ChevronLeft, ChevronRight, BookOpen, ArrowRight } from 'lucide-react'
 import { getAgromagsPaginated } from '@/lib/wordpressApi'
 import { formatHtml } from '@/lib/utils'
 

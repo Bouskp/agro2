@@ -31,10 +31,9 @@ export default async function ArticlesArchivePage({
             Tous les articles
           </h1>
           <p className='font-arial text-sm text-agro-text-secondary mt-2'>
-            Des articles fiables, pédagogiques et tournés vers les solutions
-            pour accompagner les décideurs, les entrepreneurs, les
-            investisseurs, les chercheurs et tous les acteurs engagés dans la
-            transformation de l'agriculture africaine.
+            {
+              " Des articles fiables, pédagogiques et tournés vers les solutions pour accompagner les décideurs, les entrepreneurs, les investisseurs, les chercheurs et tous les acteurs engagés dans la transformation de l'agriculture africaine."
+            }
           </p>
         </div>
 
