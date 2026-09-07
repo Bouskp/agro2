@@ -36,15 +36,17 @@ const tvPlaylist = [
   },
 ]
 
+type Video = (typeof tvPlaylist)[number]
+
 export function VideoTvSection() {
   // Bug corrigé : on stocke UNE vidéo (la première), pas tout le tableau
-  const [currentVideo, setCurrentVideo] = useState(tvPlaylist[0])
+  const [currentVideo, setCurrentVideo] = useState<Video>(tvPlaylist[0])
 
   return (
-    <section className='w-full bg-agro-charcoal text-agro-white py-16 md:py-24'>
+    <section className='w-full bg-agro-charcoal text-agro-white py-8 md:py-12'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* En-tête de section */}
-        <div className='flex items-center gap-3 mb-10'>
+        <div className='flex items-center gap-3 mb-8 md:mb-10'>
           <div className='p-2  rounded-md text-white'>
             <Image
               src={logoTv}
@@ -66,6 +68,69 @@ export function VideoTvSection() {
               publics qui façonnent une agriculture moderne, durable et
               créatrice de valeur.
             </p>
+          </div>
+        </div>
+
+        {/* PLAYLIST HORIZONTALE - MOBILE UNIQUEMENT (sous le titre, au-dessus du lecteur) */}
+        <div className='lg:hidden mb-5 -mx-4 sm:-mx-6'>
+          <div className='flex items-center justify-between px-4 sm:px-6 mb-3'>
+            <span className='font-arial text-xs font-bold uppercase tracking-wider text-white/50'>
+              Vidéos de la série ({tvPlaylist.length})
+            </span>
+          </div>
+
+          <div className='flex gap-3 overflow-x-auto px-4 sm:px-6 pb-2 snap-x snap-mandatory scrollbar-hide'>
+            {tvPlaylist.map((video) => {
+              const isPlaying = video.id === currentVideo.id
+
+              return (
+                <button
+                  key={video.id}
+                  onClick={() => setCurrentVideo(video)}
+                  className={`snap-start shrink-0 w-[220px] text-left rounded-lg overflow-hidden border transition-all duration-200 outline-none ${
+                    isPlaying
+                      ? 'bg-white/10 border-agro-orange/50 shadow-md'
+                      : 'bg-white/5 border-transparent hover:border-white/10'
+                  }`}
+                >
+                  <div className='relative aspect-video w-full rounded-t-lg overflow-hidden bg-black flex-shrink-0'>
+                    <Image
+                      src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`}
+                      alt={video.title}
+                      className='object-cover w-full h-full'
+                      loading='lazy'
+                      fill
+                    />
+                    <div
+                      className={`absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity ${
+                        isPlaying ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    >
+                      <Play
+                        className={`h-5 w-5 ${
+                          isPlaying
+                            ? 'text-agro-orange fill-agro-orange animate-pulse'
+                            : 'text-white'
+                        }`}
+                      />
+                    </div>
+                    <span className='absolute bottom-1 right-1 bg-black/80 font-arial text-[10px] text-white px-1 py-0.5 rounded-sm'>
+                      {video.duration}
+                    </span>
+                  </div>
+
+                  <div className='p-2'>
+                    <h4
+                      className={`font-lora text-xs font-semibold leading-snug line-clamp-2 transition-colors ${
+                        isPlaying ? 'text-agro-orange-light' : 'text-white/90'
+                      }`}
+                    >
+                      {video.title}
+                    </h4>
+                  </div>
+                </button>
+              )
+            })}
           </div>
         </div>
 
@@ -100,8 +165,8 @@ export function VideoTvSection() {
             </div>
           </div>
 
-          {/* PLAYLIST */}
-          <div className='lg:col-span-5 xl:col-span-4 flex flex-col'>
+          {/* PLAYLIST VERTICALE - DESKTOP / TABLETTE UNIQUEMENT */}
+          <div className='hidden lg:flex lg:col-span-5 xl:col-span-4 flex-col'>
             <span className='font-arial text-xs font-bold uppercase tracking-wider text-white/50 mb-3 px-1'>
               Vidéos de la série ({tvPlaylist.length})
             </span>

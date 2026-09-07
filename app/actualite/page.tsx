@@ -20,7 +20,7 @@ export default async function ArticlesArchivePage({
     currentPage,
     PER_PAGE,
   )
-  const { totalPages, total } = headers
+  const { totalPages } = headers
 
   return (
     <section className='w-full bg-agro-background py-8 md:py-12'>

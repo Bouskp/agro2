@@ -18,6 +18,7 @@ import {
   SheetContent,
   SheetTrigger,
   SheetTitle,
+  SheetClose,
 } from '@/components/ui/sheet'
 import { cn, links } from '@/lib/utils'
 import logo from '../app/images/logo.png'
@@ -28,7 +29,7 @@ export default function Navbar() {
     <header className='sticky top-0 z-50 bg-agro-charcoal w-full'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between'>
         {/* LOGO À GAUCHE */}
-        <Link href='/' className='relative h-12 w-12 sm:h-16 sm:w-52 shrink-0'>
+        <Link href='/' className='relative h-10 w-36 sm:h-16 sm:w-52 shrink-0'>
           <Image
             src={logo}
             alt='logo Agromakers'
@@ -48,7 +49,6 @@ export default function Navbar() {
                   (item.path !== '/' && pathname.startsWith(item.path))
                 return (
                   <NavigationMenuItem key={item.path}>
-                    {/* On passe `active` à Radix pour qu'il gère data-[active] lui-même */}
                     <NavigationMenuLink
                       asChild
                       active={isActive}
@@ -61,7 +61,6 @@ export default function Navbar() {
                         href={item.path}
                         className={cn(
                           'text-xl font-lora font-medium',
-                          // seule source de vérité pour la couleur du texte
                           'text-white hover:text-agro-white',
                           isActive && 'text-agro-green',
                         )}
@@ -91,24 +90,34 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent
               side='right'
-              className='w-[300px] flex flex-col justify-between'
+              className='w-[300px] flex flex-col justify-between bg-black text-white uppercase py-6 text-center'
             >
               <div>
-                <SheetTitle className='text-left font-georgia text-xl font-bold mb-6 mt-2 border-b pb-2 pt-2'>
-                  <Link href='/' className='text-agro-green'>
-                    AgroMakers
-                  </Link>
+                <SheetTitle className='flex justify-center border-b pb-4 pt-2 mb-6'>
+                  <SheetClose asChild>
+                    <Link href='/' className='relative h-14 w-40 shrink-0'>
+                      <Image
+                        src={logo}
+                        alt='logo Agromakers'
+                        className='object-contain'
+                        fill
+                        priority
+                      />
+                    </Link>
+                  </SheetClose>
                 </SheetTitle>
 
                 <nav className='flex flex-col gap-1 mt-4'>
                   {links.map((item) => (
-                    <Link
-                      key={item.path}
-                      href={item.path}
-                      className='block px-3 py-2.5 text-base font-medium rounded-md hover:bg-accent transition-colors'
-                    >
-                      {item.title}
-                    </Link>
+                    <SheetClose key={item.path} asChild>
+                      <Link
+                        key={item.path}
+                        href={item.path}
+                        className='block px-3 py-2.5 text-base font-medium rounded-md hover:bg-accent transition-colors'
+                      >
+                        {item.title}
+                      </Link>
+                    </SheetClose>
                   ))}
                 </nav>
               </div>
