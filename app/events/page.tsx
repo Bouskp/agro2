@@ -10,8 +10,10 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import { AgroEvent } from '@/lib/wordpress'
+import { Metadata } from 'next'
 
 const PER_PAGE = 9
+export const revalidate = 3600
 
 function formatEventDate(dateStr: string, timeStr: string) {
   const date = new Date(`${dateStr}T${timeStr || '00:00'}`)
@@ -227,4 +229,27 @@ export default async function EventsArchivePage({
       </div>
     </section>
   )
+}
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://agromakers.africa'),
+  title: 'AgroMakers - Evènements',
+  description:
+    "Rencontres, formations et salons Agromakers pour accompagner les acteurs de l'agriculture africaine.",
+  openGraph: {
+    siteName: 'Agromakers',
+    locale: 'fr_FR',
+    type: 'website',
+    title: 'AgroMakers - Evènements',
+    description:
+      "Rencontres, formations et salons Agromakers pour accompagner les acteurs de l'agriculture africaine",
+    images: ['/og-image.jpg'],
+  },
+  alternates: {
+    canonical: 'https://agromakers.africa/events',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }

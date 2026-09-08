@@ -9,8 +9,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { Metadata } from 'next'
 
 const PER_PAGE = 10
+export const revalidate = 86400 // 24h
 
 export default async function MagazinesArchivePage({
   searchParams,
@@ -277,4 +279,27 @@ export default async function MagazinesArchivePage({
       </div>
     </section>
   )
+}
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://agromakers.africa'),
+  title: 'AgroMakers - Le Magazine',
+  description:
+    "Proposer chaque deux semaines une information fiable, pédagogique et tournée vers les solutions, afin d'accompagner les décideurs, les entrepreneurs, les investisseurs, les chercheurs et tous les acteurs engagés dans la transformation de l'agriculture africaine",
+  openGraph: {
+    siteName: 'Agromakers',
+    locale: 'fr_FR',
+    type: 'website',
+    title: 'AgroMakers - Le Magazine',
+    description:
+      'AgroMakers - Le Magazine : Proposer chaque deux semaines une information fiable, pédagogique et tournée vers les solutions, afin d’accompagner les décideurs, les entrepreneurs, les investisseurs, les chercheurs et tous les acteurs engagés dans la transformation de l’agriculture africaine.',
+    images: ['/og-image.jpg'],
+  },
+  alternates: {
+    canonical: 'https://agromakers.africa/magazines',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }

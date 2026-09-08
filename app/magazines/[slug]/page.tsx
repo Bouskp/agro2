@@ -11,6 +11,45 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import type { Metadata } from 'next'
+import { Agromag } from '@/lib/wordpress'
+
+function NewsMagSchema({ mag }: { mag: Agromag }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: mag.magazine_meta.titre_magazine,
+    image: [mag.magazine_meta.poster_url],
+    datePublished: mag.date,
+    dateModified: mag.date,
+    author: [
+      {
+        '@type': 'Person',
+        name: 'La Rédaction',
+      },
+    ],
+    publisher: {
+      '@type': 'Organization',
+      name: 'Agromakers-africa',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://agromakers.africa/logo.png',
+      },
+    },
+    description: mag.magazine_meta.description,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://agromakers.africa/magazines/${mag.magazine_meta.issue}`,
+    },
+  }
+
+  return (
+    <script
+      type='application/ld+json'
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
 
 export default async function MagazinePage({
   params,
@@ -30,6 +69,7 @@ export default async function MagazinePage({
 
   return (
     <>
+      <NewsMagSchema mag={magazine} />
       <article className='w-full bg-white'>
         {/* En-tête */}
         <div className='w-full bg-agro-charcoal'>
@@ -198,4 +238,49 @@ export default async function MagazinePage({
 export async function generateStaticParams() {
   const slugs = await getAllAgromagSlug()
   return slugs.map(({ slug }) => ({ slug }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
+  const magazine = await getAgromagByNum(params.slug)
+
+  if (!magazine) {
+    return { title: 'Magazine introuvable' }
+  }
+
+  return {
+    title:
+      magazine.magazine_meta.titre_magazine ||
+      `Magazine ${magazine.magazine_meta.issue}`,
+    description: magazine.magazine_meta.description || '',
+    openGraph: {
+      title:
+        magazine.magazine_meta.titre_magazine ||
+        `Magazine ${magazine.magazine_meta.issue}`,
+      description: magazine.magazine_meta.description || '',
+      images: [
+        {
+          url: magazine.magazine_meta.poster_url ?? '',
+          width: 1200,
+          height: 630,
+        },
+      ],
+      type: 'article',
+      publishedTime: magazine.date,
+      url: `https://agromakers.africa/magazines/${params.slug}`,
+    },
+    alternates: {
+      canonical: `https://agromakers.africa/magazines/${params.slug}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title:
+        magazine.magazine_meta.titre_magazine ||
+        `Magazine ${magazine.magazine_meta.issue}`,
+      images: [magazine.magazine_meta.poster_url ?? ''],
+    },
+  }
 }

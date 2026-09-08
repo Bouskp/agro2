@@ -103,10 +103,10 @@ export default function Footer() {
                 <Phone className='h-4 w-4 shrink-0' />
                 {/* ⚠️ Numéro à confirmer : href et texte affiché différaient dans l'original */}
                 <a
-                  href='tel:+2250708734964'
+                  href='tel:+2250714132574'
                   className='hover:text-agro-orange transition-colors'
                 >
-                  +225 07 08 73 49 64
+                  +225 07 14 13 25 74
                 </a>
               </li>
               <li className='flex items-center gap-2'>

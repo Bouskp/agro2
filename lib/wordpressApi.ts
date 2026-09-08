@@ -588,21 +588,29 @@ export async function getAgromagBySlug(
   return mags[0]
 }
 
-export async function getAllAgromagSlug(): Promise<{ slug: string }[]> {
+export async function getAllAgromagSlug(): Promise<
+  { slug: string; issue: string; date: string }[]
+> {
   if (!isConfigured) return []
 
   try {
-    const allSlugs: { slug: string }[] = []
+    const allSlugs: { slug: string; issue: string; date: string }[] = []
     let page = 1
     let hasMore = true
 
     while (hasMore) {
       const response = await wordpressFetchPaginated<Agromag[]>(
         '/wp-json/wp/v2/agromags',
-        { per_page: 100, page, _fields: 'slug' },
+        { per_page: 100, page, _fields: 'slug,date,magazine_meta' },
       )
 
-      allSlugs.push(...response.data.map((mag) => ({ slug: mag.slug })))
+      allSlugs.push(
+        ...response.data.map((mag) => ({
+          slug: mag.slug,
+          date: mag.date,
+          issue: mag.magazine_meta.issue,
+        })),
+      )
       hasMore = page < response.headers.totalPages
       page++
     }
@@ -701,21 +709,28 @@ export async function getPastEvents(
 }
 
 // Pour generateStaticParams sur les pages d'événements individuelles
-export async function getAllEventSlugs(): Promise<{ slug: string }[]> {
+export async function getAllEventSlugs(): Promise<
+  { slug: string; date: string }[]
+> {
   if (!isConfigured) return []
 
   try {
-    const allSlugs: { slug: string }[] = []
+    const allSlugs: { slug: string; date: string }[] = []
     let page = 1
     let hasMore = true
 
     while (hasMore) {
       const response = await wordpressFetchPaginated<AgroEvent[]>(
         '/wp-json/wp/v2/events',
-        { per_page: 100, page, _fields: 'slug' },
+        { per_page: 100, page, _fields: 'slug,date' },
       )
 
-      allSlugs.push(...response.data.map((event) => ({ slug: event.slug })))
+      allSlugs.push(
+        ...response.data.map((event) => ({
+          slug: event.slug,
+          date: new Date().toDateString(),
+        })),
+      )
       hasMore = page < response.headers.totalPages
       page++
     }

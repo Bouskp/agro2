@@ -13,7 +13,7 @@ export const links = [
   },
 
   {
-    title: 'Actualité',
+    title: 'Actualités',
     path: '/actualite',
   },
   {
