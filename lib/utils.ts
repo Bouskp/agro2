@@ -40,10 +40,7 @@ export const links = [
     title: formatHtml('Portraits &amp; interviews'),
     path: '/category/portrait-interview',
   },
-  {
-    title: 'Événements',
-    path: '/events',
-  },
+
   {
     title: 'Newsletter',
     path: '/newsletter',
