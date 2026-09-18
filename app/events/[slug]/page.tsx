@@ -64,7 +64,7 @@ export default async function EventDetailPage({
         <div className='mx-auto max-w-4xl px-4 sm:px-6 lg:px-8'>
           {/* Retour */}
           <Link
-            href='/events'
+            href='/'
             className='inline-flex items-center gap-2 font-arial text-sm font-bold text-agro-text-secondary hover:text-agro-green transition-colors mb-6'
           >
             <ArrowLeft className='h-4 w-4' />

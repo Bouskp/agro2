@@ -55,14 +55,19 @@ export async function LatestMagazine() {
                 {meta.description}
               </p>
 
-              <div className='border-t border-b border-gray-200/80 mb-8 py-4 text-left'>
-                <p className='text-[10px] font-georgia font-bold uppercase tracking-[0.14em] text-gray-400 mb-3'>
-                  Au sommaire de cette édition
-                </p>
-                <div
-                  className='font-arial font-light text-neutral-800 text-base leading-relaxed [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-2 [&_li]:text-neutral-700 hover:[&_li]:text-black transition-colors'
-                  dangerouslySetInnerHTML={{ __html: meta.sommaire_html }}
-                />
+              <div className='mb-8 py-4 text-left'>
+                {meta.sommaire_html ||
+                  (meta.sommaire_html.length > 0 && (
+                    <>
+                      <p className='text-[10px] font-georgia font-bold uppercase tracking-[0.14em] text-gray-400 mb-3'>
+                        Au sommaire de cette édition
+                      </p>
+                      <div
+                        className='font-arial font-light text-neutral-800 text-base leading-relaxed [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-2 [&_li]:text-neutral-700 hover:[&_li]:text-black transition-colors'
+                        dangerouslySetInnerHTML={{ __html: meta.sommaire_html }}
+                      />
+                    </>
+                  ))}
               </div>
             </div>
 

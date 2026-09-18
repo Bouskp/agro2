@@ -1,19 +1,15 @@
-import { EventsSection } from '@/components/agromakers-events'
+import Eventssection from '@/components/Eventssection'
+import LatestArticles from '@/components/LatestArticles'
 import { LatestMagazine } from '@/components/LatestMagazine'
-import HeroSlider from '@/components/SliderComponent'
 import { VideoTvSection } from '@/components/video-tv'
-import { getEventsPaginated, getRecentPosts } from '@/lib/wordpressApi'
 
 export default async function Home() {
-  const data = await getRecentPosts()
-  const { data: events } = await getEventsPaginated(1, 5)
-
   return (
     <>
-      <HeroSlider posts={data} />
       <LatestMagazine />
+      <LatestArticles />
       <VideoTvSection />
-      <EventsSection events={events} />
+      <Eventssection />
     </>
   )
 }

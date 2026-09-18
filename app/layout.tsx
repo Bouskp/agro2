@@ -5,6 +5,7 @@ import Footer from '../components/Footer'
 import { cn } from '@/lib/utils'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import type { Metadata } from 'next'
+import AdBanner from '@/components/AdBanner'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' })
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     >
       <body>
         <Navbar />
+        <AdBanner />
         {children}
         <WhatsAppButton />
         <Footer />

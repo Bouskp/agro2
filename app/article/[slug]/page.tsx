@@ -3,9 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getPostBySlug, getAllPostSlugs } from '@/lib/wordpressApi'
 import { formatHtml, formatMediaDate } from '@/lib/utils'
-import { LatestArticles } from '@/components/LatestArticles'
 import { Metadata } from 'next'
 import { Post } from '@/lib/wordpress'
+import LatestArticles from '@/components/LatestArticles'
 
 const readingTime = (content: string) => {
   const wordsPerMinute = 200
@@ -189,3 +189,7 @@ export async function generateMetadata({
     },
   }
 }
+
+export const dynamicParams = true
+
+export const revalidate = 3600

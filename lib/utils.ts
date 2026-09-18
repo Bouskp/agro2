@@ -5,24 +5,48 @@ import { twMerge } from 'tailwind-merge'
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+export const categories = [
+  {
+    id: 109,
+    slug: 'portrait-interview',
+    name: formatHtml('Portrait &amp; interview'),
+  },
+  {
+    id: 108,
+    name: 'Dossier',
+    slug: 'dossier',
+  },
+  {
+    id: 110,
+    slug: 'actualite',
+    name: 'Actualités',
+  },
+]
 
 export const links = [
   {
     title: 'Accueil',
     path: '/',
   },
-
   {
     title: 'Actualités',
-    path: '/actualite',
+    path: '/category/actualite',
   },
   {
-    title: 'Magazines',
-    path: '/magazines',
+    title: formatHtml('Dossier &amp; analyse'),
+    path: '/category/dossier',
+  },
+  {
+    title: formatHtml('Portraits &amp; interviews'),
+    path: '/category/portrait-interview',
   },
   {
     title: 'Événements',
     path: '/events',
+  },
+  {
+    title: 'Newsletter',
+    path: '/newsletter',
   },
 ]
 

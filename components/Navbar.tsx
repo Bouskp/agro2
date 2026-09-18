@@ -27,9 +27,12 @@ export default function Navbar() {
   const pathname = usePathname()
   return (
     <header className='sticky top-0 z-50 bg-agro-charcoal w-full'>
-      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between'>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between'>
         {/* LOGO À GAUCHE */}
-        <Link href='/' className='relative h-10 w-36 sm:h-16 sm:w-52 shrink-0'>
+        <Link
+          href='/'
+          className='relative h-9 w-32 sm:h-14 sm:w-48 lg:h-16 lg:w-52 shrink-0'
+        >
           <Image
             src={logo}
             alt='logo Agromakers'
@@ -40,7 +43,7 @@ export default function Navbar() {
         </Link>
 
         {/* LIENS + CTA À DROITE (Desktop) */}
-        <div className='hidden md:flex items-center gap-6'>
+        <div className='hidden lg:flex items-center gap-4 xl:gap-6'>
           <NavigationMenu>
             <NavigationMenuList className='gap-1'>
               {links.map((item) => {
@@ -54,13 +57,13 @@ export default function Navbar() {
                       active={isActive}
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        'relative bg-transparent hover:bg-agro-green hover:text-white focus:bg-agro-green focus:text-white',
+                        'relative bg-transparent hover:bg-agro-green hover:text-white focus:bg-agro-green focus:text-white px-3 xl:px-4',
                       )}
                     >
                       <Link
                         href={item.path}
                         className={cn(
-                          'text-xl font-lora font-medium',
+                          'text-base xl:text-lg font-lora font-medium whitespace-nowrap',
                           'text-white hover:text-agro-white',
                           isActive && 'text-agro-green',
                         )}
@@ -76,7 +79,7 @@ export default function Navbar() {
         </div>
 
         {/* NAVIGATION MOBILE */}
-        <div className='flex md:hidden'>
+        <div className='flex lg:hidden'>
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -90,7 +93,7 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent
               side='right'
-              className='w-[300px] flex flex-col justify-between bg-black text-white uppercase py-6 text-center'
+              className='w-[85vw] sm:w-[320px] flex flex-col justify-between bg-black text-white uppercase py-6 text-center'
             >
               <div>
                 <SheetTitle className='flex justify-center border-b pb-4 pt-2 mb-6'>

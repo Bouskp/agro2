@@ -294,6 +294,7 @@ export interface AgroEvent {
   id: number
   title: { rendered: string }
   excerpt: { rendered: string }
+  date: string
   slug: string
   event_gallery_urls?: string[]
 
@@ -305,6 +306,7 @@ export interface AgroEvent {
     event_location: string
     event_link: string | null
     poster_url: string
+    event_type: string
   }
   _embedded?: {
     'wp:featuredmedia'?: [{ source_url: string }]
