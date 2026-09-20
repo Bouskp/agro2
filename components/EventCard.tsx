@@ -13,9 +13,19 @@ export type WPEvent = {
     event_date: string
     event_time: string
     event_location?: string
-    event_link?: string
+    event_link?: string | null
     event_type?: string
     poster_url?: string | null
+  }
+  _embedded?: {
+    'wp:featuredmedia'?: [
+      {
+        source_url: string
+        focus_point?: {
+          object_position: string
+        }
+      },
+    ]
   }
 }
 
@@ -67,6 +77,11 @@ export default function EventCard({ event }: { event: WPEvent }) {
             fill
             sizes='(max-width: 768px) 100vw, 400px'
             className='object-cover transition-transform duration-500 group-hover:scale-105'
+            style={{
+              objectPosition:
+                event._embedded?.['wp:featuredmedia']?.[0].focus_point
+                  ?.object_position,
+            }}
           />
         ) : (
           <div className='absolute inset-0 flex items-center justify-center text-white/40 font-lora text-3xl'>

@@ -87,6 +87,9 @@ export default async function ArticlePage({
               priority
               sizes='100vw'
               className='object-cover'
+              style={{
+                objectPosition: post.focal_point.object_position ?? '50% 50%',
+              }}
             />
             <div className='absolute inset-0 bg-gradient-to-t from-agro-charcoal/70 via-transparent to-transparent' />
           </div>

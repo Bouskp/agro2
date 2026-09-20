@@ -14,8 +14,7 @@ interface WPEntity {
 }
 
 interface FocalPoint {
-  x: string // ex: "53%"
-  y: string // ex: "33%"
+  object_position: string
 }
 
 interface RenderedContent {
@@ -309,6 +308,13 @@ export interface AgroEvent {
     event_type: string
   }
   _embedded?: {
-    'wp:featuredmedia'?: [{ source_url: string }]
+    'wp:featuredmedia'?: [
+      {
+        source_url: string
+        focus_point?: {
+          object_position: string
+        }
+      },
+    ]
   }
 }

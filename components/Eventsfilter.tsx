@@ -17,7 +17,7 @@ export default function EventsFilter({ events }: { events: WPEvent[] }) {
     <section className='w-full bg-agro-background py-12 md:py-16'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <div className='flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10'>
-          <h2 className='font-lora text-2xl sm:text-3xl font-bold text-black uppercase'>
+          <h2 className='font-lora text-xl sm:text-2xl font-bold text-black uppercase'>
             Événements
           </h2>
 

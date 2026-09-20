@@ -39,11 +39,13 @@ const tvPlaylist = [
 type Video = (typeof tvPlaylist)[number]
 
 export function VideoTvSection() {
-  // Bug corrigé : on stocke UNE vidéo (la première), pas tout le tableau
   const [currentVideo, setCurrentVideo] = useState<Video>(tvPlaylist[0])
 
   return (
-    <section className='w-full bg-agro-charcoal text-agro-white py-8 md:py-12'>
+    <section
+      className='w-full bg-agro-charcoal text-agro-white py-8 md:py-12'
+      id='podcasts'
+    >
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* En-tête de section */}
         <div className='flex items-center gap-3 mb-8 md:mb-10'>
@@ -52,15 +54,15 @@ export function VideoTvSection() {
               src={logoTv}
               alt='Logo Mian TV'
               className='h-auto w-auto rounded-md'
-              width={50}
-              height={50}
+              width={150}
+              height={150}
             />
           </div>
           <div>
-            <h2 className='font-georgia text-xl md:text-3xl font-bold tracking-tight'>
+            <h2 className='font-lora text-xl md:text-2xl font-bold tracking-tight uppercase'>
               AgroMakers - Le podcast, à retrouver sur Mian TV
             </h2>
-            <p className='font-arial text-white/60 text-sm mt-1 hidden md:block'>
+            <p className='font-arial text-white/60 text-base mt-1 hidden md:block'>
               AgroMakers est une émission de Mian TV dédiée à l’agriculture, à
               l’agro-industrie et aux innovations qui transforment les systèmes
               alimentaires en Afrique. Elle met en lumière les entrepreneurs,

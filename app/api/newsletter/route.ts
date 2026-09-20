@@ -8,8 +8,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Champs manquants.' }, { status: 400 })
   }
 
-  // ⚠️ adapte WORDPRESS_API_URL au nom réel de la variable d'environnement
-  // utilisée ailleurs dans wordpressApi.ts (ex: NEXT_PUBLIC_WORDPRESS_URL)
   const res = await fetch(
     `${process.env.WORDPRESS_API_URL}/wp-json/agro/v1/newsletter`,
     {

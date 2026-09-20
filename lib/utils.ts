@@ -33,12 +33,20 @@ export const links = [
     path: '/category/actualite',
   },
   {
-    title: formatHtml('Dossier &amp; analyse'),
+    title: formatHtml('Dossiers'),
     path: '/category/dossier',
   },
   {
-    title: formatHtml('Portraits &amp; interviews'),
+    title: formatHtml('Portraits'),
     path: '/category/portrait-interview',
+  },
+  {
+    title: 'Evenements',
+    path: '/events',
+  },
+  {
+    title: 'Podcasts',
+    path: '/#podcasts',
   },
 
   {

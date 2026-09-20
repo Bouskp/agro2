@@ -2,7 +2,11 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowDown } from 'lucide-react'
-import { getAgromagByNum, getAllAgromagSlug } from '@/lib/wordpressApi'
+import {
+  getAgromagByNum,
+  getAllAgromagSlug,
+  getAgromagsPaginated, // ⚠️ adapte au nom réel de ta fonction
+} from '@/lib/wordpressApi'
 import { formatHtml } from '@/lib/utils'
 import { FlipbookViewer } from '@/components/Flipbook'
 import {
@@ -51,6 +55,50 @@ function NewsMagSchema({ mag }: { mag: Agromag }) {
   )
 }
 
+/* ---------------------------------------------------------- */
+/* GRILLE — derniers numéros, en bas de page                   */
+/* ---------------------------------------------------------- */
+async function LatestMagazines({ excludeSlug }: { excludeSlug: string }) {
+  const { data: magazines } = await getAgromagsPaginated(1, 5)
+  const latest = (magazines as Agromag[])
+    .filter((m) => m.magazine_meta.issue !== excludeSlug)
+    .slice(0, 4)
+
+  if (latest.length === 0) return null
+
+  return (
+    <div className='w-full border-t border-agro-border'>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-14 sm:py-20'>
+        <p className='font-arial text-xs font-bold uppercase tracking-wider text-agro-text-secondary mb-8'>
+          Derniers numéros
+        </p>
+
+        <div className='grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8'>
+          {latest.map((mag) => (
+            <Link
+              key={mag.id}
+              href={`/magazines/${mag.magazine_meta.issue}`}
+              className='group block'
+            >
+              <div className='relative aspect-[3/4] w-full bg-agro-border overflow-hidden'>
+                {mag.magazine_meta.poster_url && (
+                  <Image
+                    src={mag.magazine_meta.poster_url}
+                    alt={formatHtml(mag.title.rendered)}
+                    fill
+                    sizes='(min-width: 640px) 25vw, 50vw'
+                    className='object-cover transition-transform duration-500 group-hover:scale-105'
+                  />
+                )}
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default async function MagazinePage({
   params,
 }: {
@@ -71,130 +119,75 @@ export default async function MagazinePage({
     <>
       <NewsMagSchema mag={magazine} />
       <article className='w-full bg-white'>
-        {/* En-tête */}
-        <div className='w-full bg-agro-charcoal'>
-          <div className='mx-auto max-w-5xl px-4 sm:px-6 md:px-8 pt-8 sm:pt-10 pb-10 md:pt-14 md:pb-24'>
-            <Link
-              href='/magazines'
-              className='font-arial text-sm text-white/50 hover:text-white transition-colors'
-            >
-              ← Tous les magazines
-            </Link>
+        {/* En-tête — fond clair continu, plus de bandeau sombre */}
+        <div className='mx-auto max-w-5xl px-4 sm:px-6 md:px-8 pt-10 sm:pt-14 pb-12 sm:pb-16'>
+          <Link
+            href='/magazines'
+            className='font-arial text-sm text-agro-text-secondary hover:text-agro-green transition-colors'
+          >
+            ← Tous les magazines
+          </Link>
 
-            <div className='grid grid-cols-1 md:grid-cols-[240px_1fr] gap-6 sm:gap-10 md:gap-16 mt-8 sm:mt-10 items-start'>
-              {/* Couverture */}
-              <div className='relative aspect-[3/4] w-full max-w-[160px] sm:max-w-[240px] mx-auto md:mx-0'>
-                {cover ? (
-                  <Image
-                    src={cover}
-                    alt={formatHtml(magazine.title.rendered)}
-                    fill
-                    sizes='240px'
-                    className='object-cover'
-                    priority
-                  />
-                ) : (
-                  <div className='absolute inset-0 bg-white/5' />
-                )}
-              </div>
-
-              {/* Titre + numéro */}
-              <div className='text-center md:text-left'>
-                {issue && (
-                  <span className='font-lora text-5xl sm:text-6xl md:text-7xl font-bold text-agro-green leading-none'>
-                    {issue}
-                  </span>
-                )}
-
-                <h1
-                  className='font-lora text-xl sm:text-2xl md:text-4xl font-bold text-white leading-tight mt-3 sm:mt-4 max-w-2xl'
-                  dangerouslySetInnerHTML={{
-                    __html: formatHtml(magazine.magazine_meta?.titre_magazine),
-                  }}
+          <div className='grid grid-cols-1 md:grid-cols-[220px_1fr] gap-8 sm:gap-12 md:gap-16 mt-8 sm:mt-10 items-start'>
+            {/* Couverture */}
+            <div className='relative aspect-[3/4] w-full max-w-[180px] sm:max-w-[220px] mx-auto md:mx-0'>
+              {cover ? (
+                <Image
+                  src={cover}
+                  alt={formatHtml(magazine.title.rendered)}
+                  fill
+                  sizes='220px'
+                  className='object-cover'
+                  priority
                 />
-
-                {magazine.magazine_meta.description && (
-                  <>
-                    {/* ─── DESKTOP / TABLETTE : description toujours visible ─── */}
-                    <p
-                      className='hidden md:block font-arial text-base text-white/70 leading-relaxed mt-5'
-                      dangerouslySetInnerHTML={{
-                        __html: formatHtml(magazine.magazine_meta.description),
-                      }}
-                    />
-
-                    {/* ─── MOBILE : description en accordéon ─── */}
-                    <div className='md:hidden mt-5 text-left'>
-                      <Accordion
-                        type='single'
-                        collapsible
-                        defaultValue='description'
-                      >
-                        <AccordionItem
-                          value='description'
-                          className='border-white/15'
-                        >
-                          <AccordionTrigger className='font-arial text-xs font-bold uppercase tracking-wider text-white/60 hover:text-white'>
-                            Description
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            <p
-                              className='font-arial text-sm text-white/70 leading-relaxed'
-                              dangerouslySetInnerHTML={{
-                                __html: formatHtml(
-                                  magazine.magazine_meta.description,
-                                ),
-                              }}
-                            />
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    </div>
-                  </>
-                )}
-              </div>
+              ) : (
+                <div className='absolute inset-0 bg-agro-border' />
+              )}
             </div>
-          </div>
-        </div>
 
-        {/* Corps : sommaire + téléchargement */}
-        <div className='mx-auto max-w-5xl px-4 sm:px-6 md:px-8 py-10 sm:py-14 md:py-20'>
-          <div className='grid grid-cols-1 md:grid-cols-[240px_1fr] gap-6 sm:gap-10 md:gap-16 items-start'>
-            <div className='hidden md:block' aria-hidden='true' />
+            {/* Titre + numéro */}
+            <div className='text-center md:text-left'>
+              {issue && (
+                <span className='font-arial text-xs font-bold uppercase tracking-wider text-agro-green'>
+                  Numéro {issue}
+                </span>
+              )}
 
-            <div className='max-w-2xl w-full'>
-              {magazine.magazine_meta.sommaire_html && (
+              <h1
+                className='font-lora text-2xl sm:text-3xl md:text-4xl font-bold text-agro-text leading-tight mt-2 max-w-2xl'
+                dangerouslySetInnerHTML={{
+                  __html: formatHtml(magazine.magazine_meta?.titre_magazine),
+                }}
+              />
+
+              {magazine.magazine_meta.description && (
                 <>
-                  {/* ─── DESKTOP / TABLETTE : sommaire toujours visible ─── */}
-                  <div className='hidden md:block'>
-                    <p className='font-georgia text-lg text-agro-text mb-4'>
-                      Au sommaire de cette édition
-                    </p>
-                    <div className='h-px bg-agro-text/10 mb-6' />
-                    <div
-                      className='font-georgia text-agro-text text-base leading-relaxed [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-3 [&_li]:pl-1'
-                      dangerouslySetInnerHTML={{
-                        __html: magazine.magazine_meta.sommaire_html,
-                      }}
-                    />
-                  </div>
+                  {/* ─── DESKTOP / TABLETTE : description toujours visible ─── */}
+                  <p
+                    className='hidden md:block font-arial text-base text-agro-text-secondary leading-relaxed mt-4 max-w-xl'
+                    dangerouslySetInnerHTML={{
+                      __html: formatHtml(magazine.magazine_meta.description),
+                    }}
+                  />
 
-                  {/* ─── MOBILE : sommaire en accordéon ─── */}
-                  <div className='md:hidden'>
+                  {/* ─── MOBILE : description en accordéon ─── */}
+                  <div className='md:hidden mt-5 text-left'>
                     <Accordion
                       type='single'
                       collapsible
-                      defaultValue='sommaire'
+                      defaultValue='description'
                     >
-                      <AccordionItem value='sommaire'>
-                        <AccordionTrigger className='font-georgia text-base font-bold text-black uppercase'>
-                          sommaire
+                      <AccordionItem value='description'>
+                        <AccordionTrigger className='font-arial text-xs font-bold uppercase tracking-wider text-agro-text-secondary'>
+                          Description
                         </AccordionTrigger>
                         <AccordionContent>
-                          <div
-                            className='font-georgia text-agro-text text-sm leading-relaxed [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-3 [&_li]:pl-1'
+                          <p
+                            className='font-arial text-sm text-agro-text-secondary leading-relaxed'
                             dangerouslySetInnerHTML={{
-                              __html: magazine.magazine_meta.sommaire_html,
+                              __html: formatHtml(
+                                magazine.magazine_meta.description,
+                              ),
                             }}
                           />
                         </AccordionContent>
@@ -209,7 +202,7 @@ export default async function MagazinePage({
                   href={magazine.magazine_meta?.pdf_url}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='inline-flex items-center gap-2 mt-8 sm:mt-10 font-arial text-sm font-bold text-agro-green hover:text-agro-green-dark transition-colors border-b border-agro-green/40 hover:border-agro-green-dark pb-0.5'
+                  className='inline-flex items-center gap-2 mt-6 font-arial text-sm font-bold text-agro-green hover:text-agro-green-dark transition-colors'
                 >
                   Télécharger le PDF
                   <ArrowDown className='h-3.5 w-3.5' />
@@ -221,15 +214,18 @@ export default async function MagazinePage({
 
         {/* Lecteur FlipHTML5 */}
         {flipUrl && (
-          <div className='w-full border-t border-agro-text/10'>
-            <div className='mx-auto max-w-5xl px-4 sm:px-6 md:px-8 py-10 sm:py-14 md:py-20'>
-              <p className='font-lora text-lg sm:text-xl md:text-2xl font-bold text-agro-text mb-5 sm:mb-6'>
+          <div className='w-full border-t border-agro-border'>
+            <div className='mx-auto max-w-5xl px-4 sm:px-6 md:px-8 py-10 sm:py-14'>
+              <p className='font-arial text-xs font-bold uppercase tracking-wider text-agro-text-secondary mb-6'>
                 Feuilleter le magazine
               </p>
               <FlipbookViewer url={flipUrl} />
             </div>
           </div>
         )}
+
+        {/* Derniers numéros */}
+        <LatestMagazines excludeSlug={issue} />
       </article>
     </>
   )

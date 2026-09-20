@@ -708,6 +708,23 @@ export async function getPastEvents(
   return events.filter((event) => event.event_meta.event_date < today)
 }
 
+export async function getEventsByType(
+  type: string,
+  page: number = 1,
+  perPage: number = 20,
+) {
+  return wordpressFetchPaginatedGraceful<AgroEvent>(
+    '/wp-json/wp/v2/events',
+    {
+      _embed: true,
+      page,
+      per_page: perPage,
+      event_type: type,
+    },
+    ['wordpress', 'events', type],
+  )
+}
+
 // Pour generateStaticParams sur les pages d'événements individuelles
 export async function getAllEventSlugs(): Promise<
   { slug: string; date: string }[]

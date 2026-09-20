@@ -59,7 +59,7 @@ export function EventsSection({ events }: { events: AgroEvent[] }) {
     <section className='w-full bg-agro-background py-16 md:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <div className='mb-10'>
-          <h2 className='font-lora text-2xl md:text-3xl font-bold tracking-tight text-agro-text uppercase'>
+          <h2 className='font-lora text-xl md:text-2xl font-bold tracking-tight text-black uppercase'>
             Événements
           </h2>
           <p className='font-arial text-base text-agro-text-secondary mt-1'>
@@ -81,7 +81,7 @@ export function EventsSection({ events }: { events: AgroEvent[] }) {
                 <Link href={`/events/${event.slug}`} key={event.id}>
                   <article
                     className={`rounded-xl border border-agro-border bg-agro-surface overflow-hidden hover:shadow-md transition-shadow ${
-                      past ? 'opacity-70 grayscale-[0.4]' : ''
+                      past ? 'opacity-80 grayscale-[0.6]' : ''
                     }`}
                   >
                     <div className='relative aspect-[16/9] w-full bg-agro-charcoal'>
@@ -92,6 +92,11 @@ export function EventsSection({ events }: { events: AgroEvent[] }) {
                           className='object-cover w-full h-full'
                           loading='lazy'
                           fill
+                          style={{
+                            objectPosition:
+                              event._embedded?.['wp:featuredmedia']?.[0]
+                                ?.focus_point?.object_position,
+                          }}
                         />
                       )}
 
@@ -109,13 +114,13 @@ export function EventsSection({ events }: { events: AgroEvent[] }) {
                       </span>
 
                       <h3
-                        className='font-lora text-lg font-bold mt-2 text-agro-text leading-snug uppercase'
+                        className='font-lora text-lg font-bold mt-2 text-black leading-snug uppercase'
                         dangerouslySetInnerHTML={{
                           __html: formatHtml(event.event_meta.titre_evenement),
                         }}
                       />
 
-                      <div className='flex flex-col gap-1.5 mt-3 font-arial text-sm text-agro-text-secondary'>
+                      <div className='flex flex-col gap-1.5 mt-3 font-arial text-sm text-black'>
                         {event.event_meta.event_location && (
                           <span className='flex items-center gap-1.5'>
                             <MapPin className='h-3.5 w-3.5 shrink-0' />

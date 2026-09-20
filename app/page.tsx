@@ -1,15 +1,24 @@
-import Eventssection from '@/components/Eventssection'
-import LatestArticles from '@/components/LatestArticles'
+import ActualiteSection from '@/components/Actualitesection'
+import DossierSection from '@/components/Dossiersection'
+import EventTypesSection from '@/components/Eventtypessection'
 import { LatestMagazine } from '@/components/LatestMagazine'
+import NewsletterForm from '@/components/Newsletterform'
+import NewsletterSection from '@/components/Newslettersection'
+import PortraitsSection from '@/components/Portraitssection'
 import { VideoTvSection } from '@/components/video-tv'
+
+export const revalidate = 3600
 
 export default async function Home() {
   return (
     <>
       <LatestMagazine />
-      <LatestArticles />
+      <ActualiteSection />
+      <DossierSection />
       <VideoTvSection />
-      <Eventssection />
+      <PortraitsSection />
+      <EventTypesSection />
+      <NewsletterSection />
     </>
   )
 }

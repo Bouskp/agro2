@@ -13,6 +13,9 @@ export type ArticleItem = {
   categoryId: number
   categorySlug: string
   categoryTitle: string
+  focal_point: {
+    object_position: string
+  }
   _embedded?: {
     'wp:featuredmedia'?: { source_url: string }[]
   }
@@ -101,6 +104,10 @@ export default function LatestArticlesFilter({
                       alt=''
                       fill
                       className='object-cover transition-transform duration-500 group-hover:scale-105'
+                      style={{
+                        objectPosition:
+                          item.focal_point.object_position ?? '50% 50%',
+                      }}
                     />
                   ) : (
                     <div className='absolute inset-0 flex items-center justify-center text-black font-arial text-3xl'>

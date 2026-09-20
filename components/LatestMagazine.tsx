@@ -84,18 +84,6 @@ export async function LatestMagazine() {
                     </p>
                   </AccordionContent>
                 </AccordionItem>
-
-                <AccordionItem value='sommaire'>
-                  <AccordionTrigger className='font-georgia text-xs font-bold uppercase tracking-[0.1em] text-black'>
-                    Sommaire
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div
-                      className='font-arial font-light text-neutral-800 text-sm leading-relaxed [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-2 [&_li]:text-neutral-700'
-                      dangerouslySetInnerHTML={{ __html: meta.sommaire_html }}
-                    />
-                  </AccordionContent>
-                </AccordionItem>
               </Accordion>
             </div>
 

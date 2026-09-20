@@ -81,6 +81,11 @@ export default async function EventDetailPage({
                 priority
                 sizes='(max-width: 768px) 100vw, 800px'
                 className='object-cover'
+                style={{
+                  objectPosition:
+                    event._embedded?.['wp:featuredmedia']?.[0]?.focus_point
+                      ?.object_position ?? '50% 50%',
+                }}
               />
             )}
             <div className='absolute top-4 left-4'>
