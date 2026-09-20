@@ -94,3 +94,7 @@ export async function generateMetadata({
       : 'AgroMakers - Événements',
   }
 }
+
+export async function generateStaticParams() {
+  return Object.keys(EVENT_TYPES).map((slug) => ({ slug }))
+}

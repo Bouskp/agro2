@@ -456,3 +456,7 @@ export default async function Page({
       return notFound()
   }
 }
+
+export async function generateStaticParams() {
+  return categories.map(({ slug }) => ({ slug }))
+}

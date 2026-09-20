@@ -189,7 +189,7 @@ export default async function EventDetailPage({
 
 export async function generateStaticParams() {
   const slugs = await getAllEventSlugs()
-  return slugs.map(({ slug }) => ({ slug }))
+  return slugs.map((slug) => ({ slug: slug.slug }))
 }
 
 export async function generateMetadata({
