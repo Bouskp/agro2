@@ -13,7 +13,7 @@ import type {
 // Single source of truth for WordPress configuration
 const baseUrl = process.env.WORDPRESS_URL
 const isConfigured = Boolean(baseUrl)
-
+console.log(isConfigured)
 if (!isConfigured) {
   console.warn(
     'WORDPRESS_URL environment variable is not defined - WordPress features will be unavailable',
