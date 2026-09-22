@@ -21,7 +21,7 @@ export default async function CardsContainer({
   return (
     <section className='my-16 border-t border-gray-100 pt-6 w-full'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        <div className='flex items-center justify-between border-b border-gray-100 pb-3 mb-6 gap-4'>
+        <div className='flex items-center justify-between pb-3 mb-6 gap-4'>
           <Link href={rubriqueUrl} className='group flex items-center gap-2'>
             <h2 className='font-lora text-xl sm:text-2xl font-bold text-black uppercase'>
               {rubrique.title}

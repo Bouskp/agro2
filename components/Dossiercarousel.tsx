@@ -71,17 +71,17 @@ export function DossierCarousel({ dossiers }: { dossiers: Dossier[] }) {
               ) : null}
             </Link>
 
-            <h3 className='font-lora font-semibold text-xl leading-snug text-agro-text mb-2 line-clamp-3'>
+            <h3 className='font-lora font-semibold text-xl leading-snug text-agro-text mb-2 line-clamp-3 '>
               <Link
                 href={`/article/${dossier.slug}`}
-                className='group-hover:underline'
+                className='group-hover:underline group-hover:decoration-agro-green'
               >
                 {formatHtml(dossier.titre)}
               </Link>
             </h3>
 
             {dossier.description && (
-              <p className='hidden md:block font-arial text-lg leading-relaxed text-gray-600 line-clamp-4'>
+              <p className='hidden font-arial text-sm leading-relaxed text-gray-600 md:line-clamp-4'>
                 {cleanWordPressExcerpt(formatHtml(dossier.description))}
               </p>
             )}

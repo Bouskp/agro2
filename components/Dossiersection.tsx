@@ -38,15 +38,15 @@ export async function DossiersSection() {
     <section className='w-full bg-white py-10 md:py-16'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* En-tête de section : titre + bouton "Tous les dossiers" */}
-        <div className='flex items-center justify-between gap-4 pb-4 sm:pb-5 mb-6 sm:mb-8 border-b border-gray-200'>
-          <h2 className='font-lora text-xl sm:text-2xl font-bold text-black'>
+        <div className='flex items-center justify-between gap-4 pb-4 sm:pb-5 mb-6 sm:mb-8 border-gray-200'>
+          <h2 className='font-lora text-xl sm:text-2xl font-bold text-black uppercase'>
             Dossiers
           </h2>
 
           <Link
             href='/category/dossier'
             title='Tous les dossiers'
-            className='group inline-flex items-center gap-1.5 rounded-full border border-gray-300 px-3 sm:px-4 py-2 font-arial text-xs sm:text-sm font-bold text-agro-text hover:border-agro-orange hover:text-agro-orange transition-colors whitespace-nowrap'
+            className='group inline-flex items-center text-agro-green gap-1.5 px-3 sm:px-4 py-2 font-arial text-xs sm:text-sm font-bold whitespace-nowrap'
           >
             <span className='hidden sm:inline'>Tous les dossiers</span>
             <span className='sm:hidden'>Tout voir</span>
