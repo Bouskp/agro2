@@ -21,7 +21,7 @@ export default function EventTypesSection() {
     <section className='w-full bg-agro-background py-12 md:py-16'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <h2 className='font-lora text-xl sm:text-2xl font-bold text-black uppercase mb-5'>
-          Types d&apos;événements
+          événements
         </h2>
 
         <div className='grid sm:grid-cols-2 gap-6'>

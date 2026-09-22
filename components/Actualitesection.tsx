@@ -32,7 +32,6 @@ function formatDateShort(dateString: string) {
 }
 
 export default async function ActualiteSection() {
-  // ⚠️ adapte 'actualite' si le slug de la rubrique diffère chez toi
   const category = categories.find((c) => c.slug === 'actualite')
   if (!category) return notFound()
 
