@@ -216,17 +216,6 @@ export default async function ArticlePage({
                   __html: formatHtml(post.title.rendered),
                 }}
               />
-
-              {/* Chapô / extrait, si disponible */}
-              {post.excerpt?.rendered && (
-                <div
-                  className='font-arial text-sm sm:text-base md:text-lg text-agro-text-secondary mt-3 sm:mt-4 [&_p]:m-0'
-                  dangerouslySetInnerHTML={{
-                    __html: cleanWordPressExcerpt(post.excerpt.rendered),
-                  }}
-                />
-              )}
-
               {/* Auteur / date / partage */}
               <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-5 sm:mt-6 py-4 border-y border-agro-border'>
                 <div className='flex items-center gap-3 min-w-0'>
@@ -275,6 +264,16 @@ export default async function ArticlePage({
                     />
                   )}
                 </div>
+              )}
+
+              {/* Chapô / extrait, si disponible */}
+              {post.excerpt?.rendered && (
+                <div
+                  className='font-arial text-sm sm:text-base md:text-lg text-agro-text-secondary mt-3 sm:mt-4 [&_p]:m-0'
+                  dangerouslySetInnerHTML={{
+                    __html: cleanWordPressExcerpt(post.excerpt.rendered),
+                  }}
+                />
               )}
 
               {/* Encart pub mobile/tablette (remplace les colonnes latérales) */}
