@@ -1,11 +1,23 @@
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
+import Image, { type StaticImageData } from 'next/image'
 import Link from 'next/link'
 import { getPostBySlug, getAllPostSlugs } from '@/lib/wordpressApi'
-import { formatHtml, formatMediaDate } from '@/lib/utils'
+import {
+  categories as siteCategories,
+  formatHtml,
+  formatMediaDate,
+  cleanWordPressExcerpt,
+} from '@/lib/utils'
 import { Metadata } from 'next'
 import { Post } from '@/lib/wordpress'
 import LatestArticles from '@/components/LatestArticles'
+import { Link2 } from 'lucide-react'
+import {
+  FaFacebook as Facebook,
+  FaLinkedin as Linkedin,
+  FaTwitter as Twitter,
+} from 'react-icons/fa6'
+import publicite from '@/app/images/pub.png'
 
 const readingTime = (content: string) => {
   const wordsPerMinute = 200
@@ -50,6 +62,95 @@ function NewsArticleSchema({ post }: { post: Post }) {
   )
 }
 
+function AdSlot({
+  label,
+  size,
+  className = '',
+  imageUrl,
+  href,
+  alt,
+}: {
+  label: string
+  size: string
+  className?: string
+  imageUrl?: string | StaticImageData
+  href?: string
+  alt?: string
+}) {
+  const content = imageUrl ? (
+    <div className={`relative overflow-hidden rounded-lg ${className}`}>
+      <Image
+        src={imageUrl}
+        alt={alt || label}
+        fill
+        className='object-cover'
+        sizes='(min-width: 1024px) 200px, 320px'
+      />
+      <span className='absolute top-2 right-2 font-arial text-[9px] font-bold uppercase tracking-widest text-white/90 bg-black/40 px-1.5 py-0.5 rounded select-none'>
+        Publicité
+      </span>
+    </div>
+  ) : (
+    <div
+      className={`bg-agro-bg border border-dashed border-agro-border rounded-lg flex flex-col items-center justify-center text-center relative overflow-hidden ${className}`}
+    >
+      <span className='absolute top-2 right-2 font-arial text-[9px] font-bold uppercase tracking-widest text-agro-text-muted select-none'>
+        Publicité
+      </span>
+      <div className='font-arial text-xs text-agro-text-muted space-y-1'>
+        <p className='font-bold'>{label}</p>
+        <p className='text-[10px] opacity-70'>{size}</p>
+      </div>
+    </div>
+  )
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        target='_blank'
+        rel='noopener sponsored'
+        className='block'
+      >
+        {content}
+      </Link>
+    )
+  }
+
+  return content
+}
+
+function ShareButtons() {
+  return (
+    <div className='flex items-center gap-2'>
+      <button
+        aria-label='Partager sur Facebook'
+        className='w-8 h-8 rounded-full border border-agro-border flex items-center justify-center text-agro-text-secondary hover:border-agro-green hover:text-agro-green transition-colors shrink-0'
+      >
+        <Facebook className='h-3.5 w-3.5' />
+      </button>
+      <button
+        aria-label='Partager sur X'
+        className='w-8 h-8 rounded-full border border-agro-border flex items-center justify-center text-agro-text-secondary hover:border-agro-green hover:text-agro-green transition-colors shrink-0'
+      >
+        <Twitter className='h-3.5 w-3.5' />
+      </button>
+      <button
+        aria-label='Partager sur LinkedIn'
+        className='w-8 h-8 rounded-full border border-agro-border flex items-center justify-center text-agro-text-secondary hover:border-agro-green hover:text-agro-green transition-colors shrink-0'
+      >
+        <Linkedin className='h-3.5 w-3.5' />
+      </button>
+      <button
+        aria-label='Copier le lien'
+        className='w-8 h-8 rounded-full border border-agro-border flex items-center justify-center text-agro-text-secondary hover:border-agro-green hover:text-agro-green transition-colors shrink-0'
+      >
+        <Link2 className='h-3.5 w-3.5' />
+      </button>
+    </div>
+  )
+}
+
 export default async function ArticlePage({
   params,
 }: {
@@ -64,9 +165,11 @@ export default async function ArticlePage({
 
   const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url
   const caption = post._embedded?.['wp:featuredmedia']?.[0]?.caption?.rendered
+  const category = siteCategories.find((item) => item.id == post.categories[0])
+
   const authorName = post.content?.rendered?.includes('Thom Biakpa')
     ? 'Thomas Biakpa'
-    : 'la Rédaction'
+    : 'La Rédaction'
 
   const isModified =
     new Date(post.modified).getTime() - new Date(post.date).getTime() >
@@ -76,70 +179,157 @@ export default async function ArticlePage({
   return (
     <>
       <NewsArticleSchema post={post} />
-      <article className='w-full bg-agro-background'>
-        {/* Image de couverture */}
-        {featuredImage && (
-          <div className='relative w-full aspect-[16/9] md:aspect-[21/9]'>
-            <Image
-              src={featuredImage}
-              alt={formatHtml(post.title.rendered)}
-              fill
-              priority
-              sizes='100vw'
-              className='object-cover'
-              style={{
-                objectPosition: post.focal_point.object_position ?? '50% 50%',
-              }}
-            />
-            <div className='absolute inset-0 bg-gradient-to-t from-agro-charcoal/70 via-transparent to-transparent' />
+      <article className='w-full bg-white'>
+        <div className='max-w-[1400px] mx-auto px-4 sm:px-6 pt-6 sm:pt-8 md:pt-12'>
+          <div className='grid grid-cols-1 lg:grid-cols-[160px_1fr_160px] xl:grid-cols-[200px_1fr_200px] gap-6 lg:gap-8'>
+            {/* Encart pub gauche — visible uniquement à partir de lg */}
+            <aside className='hidden lg:block'>
+              <div className='sticky top-24'>
+                <AdSlot
+                  label='Format Gratte-ciel'
+                  size='160 x 600px'
+                  className='w-full h-[600px]'
+                  imageUrl={publicite}
+                  alt='publicité'
+                />
+              </div>
+            </aside>
+
+            {/* Colonne centrale : article */}
+            <div className='min-w-0'>
+              {/* Fil d'ariane / catégorie */}
+              <div className='flex items-center gap-3 font-arial text-xs'>
+                {category && (
+                  <Link
+                    href={`/category/${category.slug.toLocaleLowerCase()}`}
+                    className='font-bold uppercase tracking-wide text-agro-green'
+                  >
+                    {formatHtml(category.name)}
+                  </Link>
+                )}
+              </div>
+
+              {/* Titre */}
+              <h1
+                className='font-lora text-xl sm:text-2xl md:text-4xl md:leading-[1.30] font-bold text-agro-text mt-3'
+                dangerouslySetInnerHTML={{
+                  __html: formatHtml(post.title.rendered),
+                }}
+              />
+
+              {/* Chapô / extrait, si disponible */}
+              {post.excerpt?.rendered && (
+                <div
+                  className='font-arial text-sm sm:text-base md:text-lg text-agro-text-secondary mt-3 sm:mt-4 [&_p]:m-0'
+                  dangerouslySetInnerHTML={{
+                    __html: cleanWordPressExcerpt(post.excerpt.rendered),
+                  }}
+                />
+              )}
+
+              {/* Auteur / date / partage */}
+              <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-5 sm:mt-6 py-4 border-y border-agro-border'>
+                <div className='flex items-center gap-3 min-w-0'>
+                  <div className='w-9 h-9 rounded-full bg-agro-green/10 flex items-center justify-center shrink-0'>
+                    <span className='font-lora text-sm font-bold text-agro-green'>
+                      {authorName.charAt(0)}
+                    </span>
+                  </div>
+                  <div className='font-arial text-sm leading-tight min-w-0'>
+                    <p className='font-bold text-agro-text truncate'>
+                      {authorName}
+                    </p>
+                    <p className='text-agro-text-muted text-xs'>
+                      {isModified ? 'Mis à jour le ' : 'Publié le '}
+                      {formatMediaDate(isModified ? post.modified : post.date)}
+                      {' · '}
+                      {timeToRead} min de lecture
+                    </p>
+                  </div>
+                </div>
+
+                <ShareButtons />
+              </div>
+
+              {/* Image de couverture */}
+              {featuredImage && (
+                <div className='mt-5 sm:mt-6'>
+                  <div className='relative w-full aspect-[4/3] sm:aspect-[16/9] rounded-md overflow-hidden'>
+                    <Image
+                      src={featuredImage}
+                      alt={formatHtml(post.title.rendered)}
+                      fill
+                      priority
+                      sizes='(min-width: 1024px) 896px, 100vw'
+                      className='object-cover'
+                      style={{
+                        objectPosition:
+                          post.focal_point.object_position ?? '50% 50%',
+                      }}
+                    />
+                  </div>
+                  {caption && (
+                    <p
+                      className='font-arial text-xs text-agro-text-muted italic mt-2'
+                      dangerouslySetInnerHTML={{ __html: formatHtml(caption) }}
+                    />
+                  )}
+                </div>
+              )}
+
+              {/* Encart pub mobile/tablette (remplace les colonnes latérales) */}
+              <div className='lg:hidden mt-6 sm:mt-8 flex justify-center'>
+                <AdSlot
+                  label='Format Bannière'
+                  size='320 x 100 px'
+                  className='w-full max-w-[320px] h-[100px]'
+                />
+              </div>
+
+              {/* Contenu de l'article */}
+              <div className='pb-12 sm:pb-16 pt-6 sm:pt-8'>
+                <div
+                  className='prose prose-sm sm:prose-base lg:prose-lg prose-neutral max-w-none font-arial leading-[1.7] text-black prose-headings:font-lora prose-headings:my-4 prose-headings:font-bold prose-headings:uppercase prose-a:text-agro-green hover:prose-a:underline prose-img:rounded-md prose-blockquote:border-agro-green prose-blockquote:font-lora prose-blockquote:not-italic prose-blockquote:text-lg sm:prose-blockquote:text-xl [&_p]:my-6'
+                  dangerouslySetInnerHTML={{
+                    __html: formatHtml(
+                      post.content.rendered.replaceAll('Thom Biakpa', ''),
+                    ),
+                  }}
+                />
+
+                {/* Tags / partage bas de page */}
+                <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-8 sm:mt-10 pt-6 border-t border-agro-border'>
+                  {category && (
+                    <Link
+                      href={`/category/${category.slug}`}
+                      className='self-start font-arial text-xs font-bold uppercase tracking-wide text-agro-green-dark bg-agro-green/10 px-3 py-1.5 rounded-full'
+                    >
+                      {category.name}
+                    </Link>
+                  )}
+                  <ShareButtons />
+                </div>
+              </div>
+            </div>
+
+            {/* Encart pub droite — visible uniquement à partir de lg */}
+            <aside className='hidden lg:block'>
+              <div className='sticky top-24 space-y-6'>
+                <AdSlot
+                  label='Format Gratte-ciel'
+                  size='160 x 600 px'
+                  className='w-full h-[600px]'
+                  imageUrl={publicite}
+                />
+                <AdSlot
+                  label='Format Pavé'
+                  size='160 x 250 px'
+                  className='w-full h-[250px]'
+                  imageUrl={publicite}
+                />
+              </div>
+            </aside>
           </div>
-        )}
-        {/* Légende de l'image, si fournie par WordPress */}
-        {caption && (
-          <p
-            className='font-arial text-xs text-agro-text-muted text-center italic mt-2 max-w-3xl mx-auto px-4'
-            dangerouslySetInnerHTML={{ __html: formatHtml(caption) }}
-          />
-        )}
-
-        <div className='max-w-3xl mx-auto px-4 sm:px-6 py-10 md:py-16'>
-          {/* Fil d'ariane simple */}
-          <Link
-            href='/actualite'
-            className='font-arial text-sm text-agro-text-secondary hover:text-agro-green-dark transition-colors'
-          >
-            ← Tous les articles
-          </Link>
-
-          {/* Titre */}
-          <h1
-            className='font-lora text-xl md:text-4xl font-bold text-agro-text leading-tight mt-4'
-            dangerouslySetInnerHTML={{
-              __html: formatHtml(post.title.rendered),
-            }}
-          />
-
-          {/* Métadonnées auteur / date */}
-          <div className='flex items-center gap-3 mt-4 font-arial text-sm text-agro-text-muted flex-wrap'>
-            <span>{authorName}</span>
-            <span className='w-1 h-1 rounded-full bg-agro-text-muted' />
-            <span>
-              {isModified ? 'Mis à jour le ' : 'Publié le '}
-              {formatMediaDate(isModified ? post.modified : post.date)}
-            </span>
-            <span className='w-1 h-1 rounded-full bg-agro-text-muted' />
-            <span>{timeToRead} min de lecture</span>
-          </div>
-
-          {/* Contenu de l'article */}
-          <div
-            className='prose prose-neutral max-w-none mt-10 font-arial text-lg text-agro-text prose-headings:font-lora prose-a:text-agro-green-dark prose-img:rounded-lg [&_p]:my-3'
-            dangerouslySetInnerHTML={{
-              __html: formatHtml(
-                post.content.rendered.replaceAll('Thom Biakpa', ''),
-              ),
-            }}
-          />
         </div>
       </article>
       <LatestArticles excludeSlug={post.slug} />

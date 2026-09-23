@@ -8,8 +8,8 @@ export function cn(...inputs: ClassValue[]) {
 export const categories = [
   {
     id: 109,
-    slug: 'portrait-interview',
-    name: formatHtml('Portrait &amp; interview'),
+    slug: 'portraits',
+    name: formatHtml('Portraits'),
   },
   {
     id: 108,
@@ -38,15 +38,15 @@ export const links = [
   },
   {
     title: formatHtml('Portraits'),
-    path: '/category/portrait-interview',
-  },
-  {
-    title: 'Evenements',
-    path: '/events',
+    path: '/category/portraits',
   },
   {
     title: 'Podcasts',
     path: '/#podcasts',
+  },
+  {
+    title: 'Evenements',
+    path: '/events',
   },
 
   {

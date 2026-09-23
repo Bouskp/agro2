@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Video, GraduationCap, ArrowRight } from 'lucide-react'
+import { Video, GraduationCap, Users, ArrowRight } from 'lucide-react'
 
 export const EVENT_TYPES = [
   {
@@ -14,6 +14,13 @@ export const EVENT_TYPES = [
     description: 'Formations approfondies animées par des experts du secteur.',
     icon: GraduationCap,
   },
+  {
+    label: "Les Rencontres de l'Intelligence Agricole Africaine (RIAAf)",
+    slug: 'riaaf',
+    description:
+      "Le rendez-vous majeur des acteurs de l'innovation agricole en Afrique.",
+    icon: Users,
+  },
 ]
 
 export default function EventTypesSection() {
@@ -24,7 +31,7 @@ export default function EventTypesSection() {
           événements
         </h2>
 
-        <div className='grid sm:grid-cols-2 gap-6'>
+        <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6'>
           {EVENT_TYPES.map(({ label, slug, description, icon: Icon }) => (
             <Link
               key={slug}

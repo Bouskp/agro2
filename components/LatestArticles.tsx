@@ -25,5 +25,11 @@ export default async function LatestArticles({
     .filter((p) => p.slug != excludeSlug)
     .slice(0, 9)
 
-  return <LatestArticlesFilter articles={merged} categories={categories} />
+  return (
+    <section className='w-full py-12 md:py-16'>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+        <LatestArticlesFilter articles={merged} categories={categories} />
+      </div>
+    </section>
+  )
 }

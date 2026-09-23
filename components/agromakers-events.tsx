@@ -114,7 +114,7 @@ export function EventsSection({ events }: { events: AgroEvent[] }) {
                       </span>
 
                       <h3
-                        className='font-lora text-lg font-bold mt-2 text-black leading-snug uppercase'
+                        className='font-lora text-lg font-bold mt-2 text-black leading-snug uppercase line-clamp-2'
                         dangerouslySetInnerHTML={{
                           __html: formatHtml(event.event_meta.titre_evenement),
                         }}

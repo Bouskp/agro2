@@ -20,7 +20,7 @@ type WPPost = {
 
 interface Rubrique {
   title: string
-  slug: string
+  slug?: string
   id: number
 }
 
@@ -43,13 +43,15 @@ export default async function BentoContainer({
           </Link>
 
           {/* Lien direct "Voir tout" vers /rubrique/[slug] */}
-          <Link
-            href={formatHtml(rubriqueUrl)}
-            className='hidden md:flex items-center align-center gap-2 font-arial text-sm font-bold text-agro-green hover:underline whitespace-nowrap'
-          >
-            <span>Voir tout</span>
-            <ArrowRight className='w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform' />
-          </Link>
+          {rubrique.slug && (
+            <Link
+              href={formatHtml(rubriqueUrl)}
+              className='hidden md:flex items-center align-center gap-2 font-arial text-sm font-bold text-agro-green hover:underline whitespace-nowrap'
+            >
+              <span>Voir tout</span>
+              <ArrowRight className='w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform' />
+            </Link>
+          )}
         </div>
 
         {/* Grille Bento réactive : 1 colonne sur mobile, 4 colonnes sur ordinateur */}

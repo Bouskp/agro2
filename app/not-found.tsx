@@ -33,7 +33,7 @@ export default function NotFound() {
             Retour à l&apos;accueil
           </Link>
           <Link
-            href='/actualite'
+            href='/category/actualite'
             className='inline-flex items-center justify-center gap-2 rounded-lg border border-agro-border text-agro-text hover:bg-agro-surface font-arial text-sm font-bold px-6 py-3 transition-colors'
           >
             <Search className='h-4 w-4' />

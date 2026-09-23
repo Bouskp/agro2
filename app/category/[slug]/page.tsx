@@ -434,7 +434,7 @@ export default async function Page({
           totalPages={totalPages}
         />
       )
-    case 'portrait-interview':
+    case 'portraits':
       return (
         <PortraitInterviewLayout
           posts={posts as WPPost[]}

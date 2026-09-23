@@ -52,7 +52,7 @@ export default function LatestArticlesFilter({
   return (
     <section className='mx-auto max-w-7xl px-4 py-12 sm:py-16'>
       <div className='flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10'>
-        <h2 className='font-lora text-2xl sm:text-4xl text-black uppercase font-bold'>
+        <h2 className='font-lora text-xl sm:text-2xl text-black uppercase font-bold'>
           Derniers articles
         </h2>
 
@@ -97,7 +97,7 @@ export default function LatestArticlesFilter({
                 href={`/article/${item.slug}`}
                 className='group block'
               >
-                <div className='relative aspect-[16/10] overflow-hidden bg-agro-charcoal mb-4'>
+                <div className='relative aspect-[16/10] overflow-hidden mb-4'>
                   {img ? (
                     <Image
                       src={img}
@@ -110,7 +110,7 @@ export default function LatestArticlesFilter({
                       }}
                     />
                   ) : (
-                    <div className='absolute inset-0 flex items-center justify-center text-black font-arial text-3xl'>
+                    <div className='absolute inset-0 flex items-center justify-center text-black font-arial text-lg'>
                       {item.title.rendered.replace(/<[^>]+>/g, '').charAt(0)}
                     </div>
                   )}
@@ -122,7 +122,7 @@ export default function LatestArticlesFilter({
                   {formatDate(item.date)}
                 </span>
                 <h3
-                  className='font-lora text-lg text-agro-charcoal leading-snug mt-1 group-hover:text-agro-green transition-colors'
+                  className='font-arial text-base text-black leading-snug mt-1 group-hover:text-agro-green transition-colors line-clamp-3'
                   dangerouslySetInnerHTML={{ __html: item.title.rendered }}
                 />
               </Link>

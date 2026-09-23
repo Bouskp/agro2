@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import { getEventsByType } from '@/lib/wordpressApi'
 import { AgroEvent } from '@/lib/wordpress'
-import EventCard from '@/components/EventCard' // ⚠️ adapte le chemin réel
-import Pagination from '@/components/Pagination' // ⚠️ adapte le chemin réel
+import EventCard from '@/components/EventCard'
+import Pagination from '@/components/Pagination'
 import { CalendarX2 } from 'lucide-react'
 
 const PER_PAGE = 12
@@ -11,6 +11,7 @@ const PER_PAGE = 12
 const EVENT_TYPES: Record<string, { label: string; plural: string }> = {
   webinaire: { label: 'Webinaire', plural: 'Webinaires' },
   masterclass: { label: 'Masterclass', plural: 'Masterclass' },
+  riaaf: { label: 'Riaaf', plural: 'Riaafs' },
 }
 
 export function EmptyEventsState() {
@@ -42,6 +43,7 @@ export default async function Page({
   const currentPage = Math.max(1, parseInt(page || '1', 10))
 
   const typeInfo = EVENT_TYPES[slug.toLowerCase()]
+
   if (!typeInfo) {
     return notFound()
   }
