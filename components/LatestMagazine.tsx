@@ -18,18 +18,30 @@ export async function LatestMagazine() {
   const meta = magazine.magazine_meta
 
   return (
-    <section className='w-full bg-gray-50/70 border-y border-gray-200/60 py-8 md:py-12'>
+    <section className='w-full bg-gray-50/70 border-y border-gray-200/60 py-8 sm:py-10 md:py-12'>
       <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8'>
-        <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-16 items-center'>
+        {/* ─── EN-TÊTE DE SECTION ─── */}
+        <div className='text-center mb-8 sm:mb-10 md:mb-14'>
+          <h2 className='font-lora text-lg sm:text-xl md:text-2xl font-bold text-black uppercase'>
+            Agromakers - Le Magazine
+          </h2>
+          <p className='font-arial text-xs sm:text-sm text-gray-600 mt-2 max-w-2xl mx-auto px-2'>
+            Retrouvez chaque numéro de notre magazine, avec ses dossiers,
+            analyses et actualités du secteur.
+          </p>
+        </div>
+
+        <div className='grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-16 items-center'>
           {/* ─── COUVERTURE ─── */}
           <div className='lg:col-span-5 flex justify-center order-first lg:order-none'>
-            <div className='group relative w-full max-w-[240px] sm:max-w-[280px] lg:max-w-[320px] aspect-[3/4] overflow-hidden bg-white shadow-[10px_10px_20px_rgba(0,0,0,0.08)] sm:shadow-[15px_15px_30px_rgba(0,0,0,0.08)] rounded-sm transition-all duration-500 ease-out hover:shadow-[20px_20px_40px_rgba(0,0,0,0.12)] hover:-translate-y-1'>
+            <div className='group relative w-full max-w-[180px] xs:max-w-[220px] sm:max-w-[280px] lg:max-w-[320px] aspect-[3/4] overflow-hidden bg-white shadow-[8px_8px_16px_rgba(0,0,0,0.08)] sm:shadow-[15px_15px_30px_rgba(0,0,0,0.08)] rounded-sm transition-all duration-500 ease-out hover:shadow-[20px_20px_40px_rgba(0,0,0,0.12)] hover:-translate-y-1'>
               {meta.poster_url && (
                 <Image
                   src={meta.poster_url}
                   alt={`Couverture du magazine n°${meta.issue}`}
                   fill
                   priority
+                  sizes='(min-width: 1024px) 320px, (min-width: 640px) 280px, 220px'
                   className='object-cover select-none transition-transform duration-700 ease-out group-hover:scale-[1.03]'
                   style={{ objectPosition: meta.poster_position ?? '50% 50%' }}
                 />
@@ -40,14 +52,14 @@ export async function LatestMagazine() {
           </div>
 
           {/* ─── CONTENU ─── */}
-          <div className='lg:col-span-7 flex flex-col justify-center text-center lg:text-left'>
-            <span className='text-[10px] font-arial font-medium uppercase tracking-[0.14em] text-agro-orange mb-3 block'>
+          <div className='lg:col-span-7 flex flex-col justify-center text-center lg:text-left px-2 sm:px-0'>
+            <span className='text-[9px] sm:text-[10px] font-arial font-medium uppercase tracking-[0.14em] text-agro-orange mb-2 sm:mb-3 block'>
               Dernier Numéro — N°{meta.issue}
             </span>
 
-            <h2 className='font-lora text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-black tracking-wide leading-tight mb-4 sm:mb-6'>
+            <h3 className='font-lora text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold text-black tracking-wide leading-tight mb-3 sm:mb-6'>
               {meta.titre_magazine}
-            </h2>
+            </h3>
 
             {/* ─── DESKTOP / TABLETTE : description + sommaire toujours visibles ─── */}
             <div className='hidden md:block'>
@@ -72,7 +84,7 @@ export async function LatestMagazine() {
             </div>
 
             {/* ─── MOBILE : description + sommaire en accordéon ─── */}
-            <div className='md:hidden text-left mb-4'>
+            <div className='md:hidden text-left mb-4 sm:mb-6'>
               <Accordion type='single' collapsible defaultValue='description'>
                 <AccordionItem value='description'>
                   <AccordionTrigger className='font-georgia text-xs font-bold uppercase tracking-[0.1em] text-black'>
@@ -88,7 +100,7 @@ export async function LatestMagazine() {
             </div>
 
             {/* Actions */}
-            <div className='flex flex-col sm:flex-row items-center lg:items-stretch justify-center lg:justify-start gap-4 sm:gap-8 mt-2'>
+            <div className='flex flex-col sm:flex-row items-center lg:items-stretch justify-center lg:justify-start gap-3 sm:gap-8 mt-2'>
               <Link
                 href={`/magazines/${magazine.magazine_meta.issue}`}
                 className='group inline-flex items-center gap-2 font-sans text-[11px] uppercase tracking-[0.14em] font-bold text-black hover:text-agro-orange transition-colors'

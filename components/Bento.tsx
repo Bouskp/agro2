@@ -1,8 +1,15 @@
-import { formatHtml, formatMediaDate } from '@/lib/utils'
+import { categories, formatHtml, formatMediaDate } from '@/lib/utils'
 import { getPostsByCategoryPaginated } from '@/lib/wordpressApi'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+
+type WPTerm = {
+  id: number
+  name: string
+  slug: string
+  taxonomy: string
+}
 
 type WPPost = {
   id: number
@@ -12,6 +19,7 @@ type WPPost = {
   excerpt?: { rendered: string }
   _embedded?: {
     'wp:featuredmedia'?: { source_url: string }[]
+    'wp:term'?: WPTerm[][]
   }
   focal_point: {
     object_position: string
@@ -22,6 +30,12 @@ interface Rubrique {
   title: string
   slug?: string
   id: number
+}
+
+function getPostCategory(post: WPPost) {
+  // wp:term[0] = catégories, wp:term[1] = tags (convention WordPress standard)
+  const terms = post._embedded?.['wp:term']?.[0] ?? []
+  return terms.find((t) => t.taxonomy === 'category') ?? terms[0] ?? null
 }
 
 export default async function BentoContainer({
@@ -58,6 +72,10 @@ export default async function BentoContainer({
         <div className='grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[220px]'>
           {posts.slice(0, 5).map((post, idx) => {
             const isMain = idx === 0
+            const category = getPostCategory(post as WPPost)
+            const findedCategory = categories.find(
+              (item) => item.id == category.id,
+            )
 
             return (
               <div
@@ -96,7 +114,17 @@ export default async function BentoContainer({
                 )}
 
                 {/* Dégradé noir pour protéger la lisibilité des textes blancs */}
-                <div className='absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent' />
+                <div className='absolute inset-0 bg-gradient-to-t from-black via-black/5 to-transparent' />
+
+                {/* Badge de la catégorie propre à cet article, en haut à gauche */}
+                {category && (
+                  <Link
+                    href={`/category/${findedCategory?.slug}`}
+                    className='absolute top-3 left-3 z-10 bg-agro-green/90 hover:bg-agro-green text-white font-arial text-[10px] sm:text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full transition-colors'
+                  >
+                    {formatHtml(findedCategory?.name ?? 'Non classé')}
+                  </Link>
+                )}
 
                 {/* Contenu textuel superposé calé en bas */}
                 <div className='absolute inset-x-0 bottom-0 p-5 flex flex-col justify-end text-white z-10'>

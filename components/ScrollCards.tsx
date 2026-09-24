@@ -59,7 +59,7 @@ export default async function CardsContainer({
                         : '50% 50%',
                     }}
                   />
-                  <div className='absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent' />
+                  <div className='absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent' />
                   <div className='absolute inset-x-0 bottom-0 p-6 space-y-2 flex flex-col justify-end text-white'>
                     <span className='font-condensed text-xs font-black uppercase tracking-widest text-agro-orange'>
                       {formatMediaDate(post.date)}

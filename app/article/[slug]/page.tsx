@@ -25,6 +25,27 @@ const readingTime = (content: string) => {
   return Math.ceil(words / wordsPerMinute)
 }
 
+// Coupe le HTML de l'article en deux moitiés, au niveau d'un paragraphe,
+// pour pouvoir insérer un encart pub au milieu sur mobile.
+function splitContentInHalf(html: string): [string, string] {
+  const paragraphs = html.split(/(<\/p>)/i)
+
+  // paragraphs alterne texte + "</p>" — on reconstruit une liste de blocs complets
+  const blocks: string[] = []
+  for (let i = 0; i < paragraphs.length; i += 2) {
+    const block = paragraphs[i] + (paragraphs[i + 1] ?? '')
+    if (block.trim()) blocks.push(block)
+  }
+
+  if (blocks.length < 2) {
+    // Pas assez de paragraphes détectés pour couper proprement
+    return [html, '']
+  }
+
+  const mid = Math.ceil(blocks.length / 2)
+  return [blocks.slice(0, mid).join(''), blocks.slice(mid).join('')]
+}
+
 function NewsArticleSchema({ post }: { post: Post }) {
   const schema = {
     '@context': 'https://schema.org',
@@ -130,12 +151,6 @@ function ShareButtons() {
         <Facebook className='h-3.5 w-3.5' />
       </button>
       <button
-        aria-label='Partager sur X'
-        className='w-8 h-8 rounded-full border border-agro-border flex items-center justify-center text-agro-text-secondary hover:border-agro-green hover:text-agro-green transition-colors shrink-0'
-      >
-        <Twitter className='h-3.5 w-3.5' />
-      </button>
-      <button
         aria-label='Partager sur LinkedIn'
         className='w-8 h-8 rounded-full border border-agro-border flex items-center justify-center text-agro-text-secondary hover:border-agro-green hover:text-agro-green transition-colors shrink-0'
       >
@@ -175,6 +190,15 @@ export default async function ArticlePage({
     new Date(post.modified).getTime() - new Date(post.date).getTime() >
     1000 * 60 * 60 * 12
   const timeToRead = readingTime(post.content.rendered)
+
+  const cleanedContent = formatHtml(
+    post.content.rendered.replaceAll('Thom Biakpa', ''),
+  )
+  const [contentFirstHalf, contentSecondHalf] =
+    splitContentInHalf(cleanedContent)
+
+  const proseClassName =
+    'prose prose-sm sm:prose-base lg:prose-lg prose-neutral max-w-none font-arial leading-[1.7] text-black prose-headings:font-lora prose-headings:my-4 prose-headings:font-bold prose-headings:uppercase prose-a:text-agro-green hover:prose-a:underline prose-img:rounded-md prose-blockquote:border-agro-green prose-blockquote:font-lora prose-blockquote:not-italic prose-blockquote:text-lg sm:prose-blockquote:text-xl [&_p]:my-6'
 
   return (
     <>
@@ -276,25 +300,39 @@ export default async function ArticlePage({
                 />
               )}
 
-              {/* Encart pub mobile/tablette (remplace les colonnes latérales) */}
-              <div className='lg:hidden mt-6 sm:mt-8 flex justify-center'>
-                <AdSlot
-                  label='Format Bannière'
-                  size='320 x 100 px'
-                  className='w-full max-w-[320px] h-[100px]'
-                />
-              </div>
-
               {/* Contenu de l'article */}
               <div className='pb-12 sm:pb-16 pt-6 sm:pt-8'>
-                <div
-                  className='prose prose-sm sm:prose-base lg:prose-lg prose-neutral max-w-none font-arial leading-[1.7] text-black prose-headings:font-lora prose-headings:my-4 prose-headings:font-bold prose-headings:uppercase prose-a:text-agro-green hover:prose-a:underline prose-img:rounded-md prose-blockquote:border-agro-green prose-blockquote:font-lora prose-blockquote:not-italic prose-blockquote:text-lg sm:prose-blockquote:text-xl [&_p]:my-6'
-                  dangerouslySetInnerHTML={{
-                    __html: formatHtml(
-                      post.content.rendered.replaceAll('Thom Biakpa', ''),
-                    ),
-                  }}
-                />
+                {contentSecondHalf ? (
+                  <>
+                    {/* Première moitié */}
+                    <div
+                      className={proseClassName}
+                      dangerouslySetInnerHTML={{ __html: contentFirstHalf }}
+                    />
+
+                    {/* Encart pub mobile/tablette, au milieu de l'article */}
+                    <div className='lg:hidden my-8 flex justify-center'>
+                      <AdSlot
+                        label='Format Bannière'
+                        size='320 x 100 px'
+                        className='w-full max-w-[320px] h-[100px]'
+                        imageUrl={publicite}
+                      />
+                    </div>
+
+                    {/* Deuxième moitié */}
+                    <div
+                      className={proseClassName}
+                      dangerouslySetInnerHTML={{ __html: contentSecondHalf }}
+                    />
+                  </>
+                ) : (
+                  // Repli si le contenu n'a pas pu être coupé (peu de paragraphes)
+                  <div
+                    className={proseClassName}
+                    dangerouslySetInnerHTML={{ __html: contentFirstHalf }}
+                  />
+                )}
 
                 {/* Tags / partage bas de page */}
                 <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-8 sm:mt-10 pt-6 border-t border-agro-border'>

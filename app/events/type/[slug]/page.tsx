@@ -59,7 +59,14 @@ export default async function Page({
     <section className='w-full bg-agro-background py-8 md:py-12'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <h1 className='font-lora text-xl md:text-2xl font-bold text-black uppercase mb-10'>
-          {typeInfo.plural}
+          {typeInfo.plural == 'Riaafs' ? (
+            <>
+              Les rencontres de l&apos;intelligence agricole africaine (RIAA
+              <span className='normal-case'>f</span>)
+            </>
+          ) : (
+            typeInfo.plural
+          )}
         </h1>
 
         {events.length === 0 ? (

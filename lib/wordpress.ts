@@ -306,6 +306,7 @@ export interface AgroEvent {
     event_link: string | null
     poster_url: string
     event_type: string
+    event_replay_link: string
   }
   _embedded?: {
     'wp:featuredmedia'?: [
