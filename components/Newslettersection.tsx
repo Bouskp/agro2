@@ -2,7 +2,7 @@ import NewsletterForm from '@/components/Newsletterform' // ⚠️ adapte le che
 
 export default function NewsletterSection() {
   return (
-    <section className='w-full bg-agro-charcoal py-16 md:py-20 border-b border-white'>
+    <section className='w-full bg-black py-16 md:py-20 border-b border-white'>
       <div className='mx-auto max-w-5xl px-4 sm:px-6 lg:px-8'>
         <div className='grid md:grid-cols-2 gap-10 md:gap-16 items-center'>
           <div>

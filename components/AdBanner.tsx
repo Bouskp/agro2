@@ -1,34 +1,28 @@
 'use client'
 
 import Image from 'next/image'
-import mobileImage from '../app/images/banner_agriculture_300x250.png'
-import desktopImage from '../app/images/banner_agriculture_1000x300.png'
+import Link from 'next/link'
+import bannerImage from '../app/images/banner_hamanie_100.jpeg'
 
 export default function AdBanner() {
   return (
-    <div className='w-full flex justify-center items-center bg-stone-100 border-y border-stone-200 h-[250px] md:h-[300px] mt-4'>
-      {/* Format PC — 1000 x 300 */}
-      <div className='hidden md:flex items-center justify-center w-[1000px] max-w-full h-[300px] relative'>
+    <div className='w-full flex justify-center items-center bg-stone-100 border-y border-stone-200 py-4'>
+      <Link
+        href='https://www.hamanie.news/magazine'
+        target='_blank'
+        rel='noopener noreferrer'
+        className='w-full max-w-[1000px] mx-auto px-4 block'
+      >
         <Image
-          src={desktopImage}
-          alt='Publicité AgroMakers'
-          fill
-          className='object-cover'
-          sizes='1000px'
+          src={bannerImage}
+          alt='Hamaniè — Le numéro 100 est en ligne, le mensuel des leaders et décideurs qui façonnent l’Afrique'
+          width={1600}
+          height={702}
+          sizes='(min-width: 1024px) 1000px, 100vw'
+          className='w-full h-auto rounded-lg hover:opacity-90 transition-opacity'
           priority
         />
-      </div>
-
-      {/* Format mobile — 300 x 250 */}
-      <div className='flex md:hidden items-center justify-center w-[300px] max-w-full h-[250px] relative'>
-        <Image
-          src={mobileImage}
-          alt='Publicité AgroMakers'
-          fill
-          className='object-contain'
-          sizes='300px'
-        />
-      </div>
+      </Link>
     </div>
   )
 }

@@ -180,8 +180,8 @@ export default function NewsletterForm() {
           onChange={(e) => setConsent(e.target.checked)}
           className='mt-0.5 h-4 w-4 rounded border-agro-border text-agro-green focus:ring-agro-green/40'
         />
-        J&apos;accepte de recevoir la newsletter Agromakers par email et SMS. Je
-        peux me désinscrire à tout moment.
+        J&apos;accepte de recevoir la newsletter Agromakers par email. Je peux
+        me désinscrire à tout moment.
       </label>
 
       {errorMessage && (

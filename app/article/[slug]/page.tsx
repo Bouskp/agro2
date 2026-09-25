@@ -12,11 +12,7 @@ import { Metadata } from 'next'
 import { Post } from '@/lib/wordpress'
 import LatestArticles from '@/components/LatestArticles'
 import { Link2 } from 'lucide-react'
-import {
-  FaFacebook as Facebook,
-  FaLinkedin as Linkedin,
-  FaTwitter as Twitter,
-} from 'react-icons/fa6'
+import { FaFacebook as Facebook, FaLinkedin as Linkedin } from 'react-icons/fa6'
 import publicite from '@/app/images/pub.png'
 
 const readingTime = (content: string) => {
@@ -198,7 +194,7 @@ export default async function ArticlePage({
     splitContentInHalf(cleanedContent)
 
   const proseClassName =
-    'prose prose-sm sm:prose-base lg:prose-lg prose-neutral max-w-none font-arial leading-[1.7] text-black prose-headings:font-lora prose-headings:my-4 prose-headings:font-bold prose-headings:uppercase prose-a:text-agro-green hover:prose-a:underline prose-img:rounded-md prose-blockquote:border-agro-green prose-blockquote:font-lora prose-blockquote:not-italic prose-blockquote:text-lg sm:prose-blockquote:text-xl [&_p]:my-6'
+    'prose prose-sm sm:prose-base lg:prose-lg prose-neutral max-w-none font-arial leading-[1.7] text-black prose-headings:font-arial prose-headings:my-2 prose-headings:font-bold prose-headings:uppercase prose-a:text-agro-green hover:prose-a:underline prose-img:rounded-md prose-blockquote:border-agro-green prose-blockquote:font-lora prose-blockquote:not-italic prose-blockquote:text-lg sm:prose-blockquote:text-xl [&_p]:my-4 [&_ol:last-of-type]:text-sm [&_ol:last-of-type_li]:text-sm [&_ol:last-of-type_a]:text-sm prose-figcaption:italic prose-figcaption:text-sm'
 
   return (
     <>
@@ -208,15 +204,7 @@ export default async function ArticlePage({
           <div className='grid grid-cols-1 lg:grid-cols-[160px_1fr_160px] xl:grid-cols-[200px_1fr_200px] gap-6 lg:gap-8'>
             {/* Encart pub gauche — visible uniquement à partir de lg */}
             <aside className='hidden lg:block'>
-              <div className='sticky top-24'>
-                <AdSlot
-                  label='Format Gratte-ciel'
-                  size='160 x 600px'
-                  className='w-full h-[600px]'
-                  imageUrl={publicite}
-                  alt='publicité'
-                />
-              </div>
+              <div className='sticky top-24'></div>
             </aside>
 
             {/* Colonne centrale : article */}
@@ -351,20 +339,7 @@ export default async function ArticlePage({
 
             {/* Encart pub droite — visible uniquement à partir de lg */}
             <aside className='hidden lg:block'>
-              <div className='sticky top-24 space-y-6'>
-                <AdSlot
-                  label='Format Gratte-ciel'
-                  size='160 x 600 px'
-                  className='w-full h-[600px]'
-                  imageUrl={publicite}
-                />
-                <AdSlot
-                  label='Format Pavé'
-                  size='160 x 250 px'
-                  className='w-full h-[250px]'
-                  imageUrl={publicite}
-                />
-              </div>
+              <div className='sticky top-24 space-y-6'></div>
             </aside>
           </div>
         </div>
