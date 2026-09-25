@@ -34,7 +34,7 @@ export async function LatestMagazine() {
         <div className='grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-16 items-center'>
           {/* ─── COUVERTURE ─── */}
           <div className='lg:col-span-5 flex justify-center order-first lg:order-none'>
-            <div className='group relative w-full max-w-[200px] xs:max-w-[250px] sm:max-w-[300px] lg:max-w-[350px] aspect-[3/4] overflow-hidden bg-white shadow-[8px_8px_16px_rgba(0,0,0,0.08)] sm:shadow-[15px_15px_30px_rgba(0,0,0,0.08)] rounded-sm transition-all duration-500 ease-out hover:shadow-[20px_20px_40px_rgba(0,0,0,0.12)] hover:-translate-y-1'>
+            <div className='group relative w-full max-w-[250px] xs:max-w-[300px] sm:max-w-[350px] lg:max-w-[400px] aspect-[3/4] overflow-hidden bg-white shadow-[8px_8px_16px_rgba(0,0,0,0.08)] sm:shadow-[15px_15px_30px_rgba(0,0,0,0.08)] rounded-sm transition-all duration-500 ease-out hover:shadow-[20px_20px_40px_rgba(0,0,0,0.12)] hover:-translate-y-1'>
               {meta.poster_url && (
                 <Image
                   src={meta.poster_url}
