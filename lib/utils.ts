@@ -98,3 +98,8 @@ export function cleanWordPressExcerpt(excerpt: string): string {
     .replace(/\[&hellip;\]/g, '') // 3. Supprime la variante encodée HTML "[&hellip;]"
     .trim() // 4. Nettoie les espaces vides restants au début et à la fin
 }
+
+export function capitaliserPhrase(chaine: string): string {
+  if (!chaine) return chaine // Gère le cas d'une chaîne vide
+  return chaine.charAt(0).toUpperCase() + chaine.slice(1)
+}

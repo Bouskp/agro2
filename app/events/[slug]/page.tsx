@@ -1,5 +1,5 @@
 import { getAllEventSlugs, getEventBySlug } from '@/lib/wordpressApi'
-import { formatHtml } from '@/lib/utils'
+import { capitaliserPhrase, formatHtml } from '@/lib/utils'
 import {
   Calendar,
   MapPin,
@@ -114,14 +114,14 @@ export default async function EventDetailPage({
         <div className='grid grid-cols-1 lg:grid-cols-[160px_1fr_160px] xl:grid-cols-[200px_1fr_200px] gap-6 lg:gap-8'>
           {/* Encart pub gauche */}
           <aside className='hidden lg:block'>
-            <div className='sticky top-24'>
+            {/* <div className='sticky top-24'>
               <AdSlot
                 label='Format Gratte-ciel'
                 size='160 x 600 px'
                 className='w-full h-[600px]'
                 imageUrl={banner}
               />
-            </div>
+            </div> */}
           </aside>
 
           {/* Colonne centrale */}
@@ -170,7 +170,9 @@ export default async function EventDetailPage({
               <h1
                 className='font-lora text-2xl md:text-[2.25rem] md:leading-[1.15] font-bold text-agro-text mt-3'
                 dangerouslySetInnerHTML={{
-                  __html: formatHtml(event.event_meta.titre_evenement),
+                  __html: capitaliserPhrase(
+                    formatHtml(event.event_meta.titre_evenement),
+                  ),
                 }}
               />
 
@@ -234,11 +236,11 @@ export default async function EventDetailPage({
 
             {/* Encart pub mobile/tablette */}
             <div className='lg:hidden mt-6 sm:mt-8 flex justify-center'>
-              <AdSlot
+              {/* <AdSlot
                 label='Format Bannière'
                 size='320 x 100 px'
                 className='w-full max-w-[320px] h-[100px]'
-              />
+              /> */}
             </div>
 
             {/* Contenu / description */}
@@ -276,7 +278,7 @@ export default async function EventDetailPage({
 
           {/* Encart pub droite */}
           <aside className='hidden lg:block'>
-            <div className='sticky top-24 space-y-6'>
+            {/* <div className='sticky top-24 space-y-6'>
               <AdSlot
                 label='Format Gratte-ciel'
                 size='160 x 600 px'
@@ -289,7 +291,7 @@ export default async function EventDetailPage({
                 className='w-full h-[250px]'
                 imageUrl={banner}
               />
-            </div>
+            </div> */}
           </aside>
         </div>
       </div>

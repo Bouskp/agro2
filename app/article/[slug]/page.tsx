@@ -279,14 +279,14 @@ export default async function ArticlePage({
               )}
 
               {/* Chapô / extrait, si disponible */}
-              {post.excerpt?.rendered && (
+              {/* {post.excerpt?.rendered && (
                 <div
                   className='font-arial text-sm sm:text-base md:text-lg text-agro-text-secondary mt-3 sm:mt-4 [&_p]:m-0'
                   dangerouslySetInnerHTML={{
                     __html: cleanWordPressExcerpt(post.excerpt.rendered),
                   }}
                 />
-              )}
+              )} */}
 
               {/* Contenu de l'article */}
               <div className='pb-12 sm:pb-16 pt-6 sm:pt-8'>
