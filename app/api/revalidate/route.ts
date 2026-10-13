@@ -24,14 +24,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 3. Revalidation ciblée (l'article précis)
     revalidateTag(`post-${slug}`, 'max')
-
-    // 4. Revalidation de la liste (page d'accueil du blog, listing, etc.)
     revalidateTag('posts', 'max')
-
-    // 5. Optionnel : revalider aussi le chemin exact si vous n'utilisez pas
-    // les tags partout, ou en complément
+    revalidatePath(`/article/${slug}`)
     revalidatePath('/actualite')
     revalidatePath('/')
 
