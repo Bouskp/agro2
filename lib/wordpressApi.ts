@@ -309,6 +309,7 @@ export async function getPostBySlug(slug: string): Promise<Post | undefined> {
     '/wp-json/wp/v2/posts',
     [],
     { slug, _embed: true },
+    ['wordpress', 'posts', `post-${slug}`],
   )
   return posts[0]
 }
