@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     // 1. Vérification du secret (header, pas query param)
     const secret = request.headers.get('x-revalidate-secret')
 
-    if (!secret || secret !== process.env.REVALIDATE_SECRET) {
+    if (!secret || secret !== process.env.WORDPRESS_WEBHOOK_SECRET) {
       return NextResponse.json(
         { message: 'Non autorisé : secret invalide ou manquant' },
         { status: 401 },
@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
     // 5. Optionnel : revalider aussi le chemin exact si vous n'utilisez pas
     // les tags partout, ou en complément
     revalidatePath('/actualite')
+    revalidatePath('/')
 
     return NextResponse.json({
       revalidated: true,
