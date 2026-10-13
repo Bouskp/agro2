@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { timingSafeEqual } from 'node:crypto'
 
 function isValidSecret(received: string | null): boolean {
-  const expected = process.env.REVALIDATE_SECRET ?? ''
+  const expected = process.env.WORDPRESS_WEBHOOK_SECRET ?? ''
   if (!received || !expected) return false
   const a = Buffer.from(received)
   const b = Buffer.from(expected)
