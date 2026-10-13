@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
     // 4. Revalidation par chemins
     revalidatePath(`/article/${slug}`)
-    revalidatePath('/actualite')
+    revalidatePath('/category/actualite')
     revalidatePath('/')
 
     // 5. Chemins spécifiques aux autres types de contenu
