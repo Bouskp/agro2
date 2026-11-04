@@ -14,10 +14,29 @@ import { Link2 } from 'lucide-react'
 import { FaFacebook as Facebook, FaLinkedin as Linkedin } from 'react-icons/fa6'
 import publicite from '@/app/images/pub.png'
 
+type WPTerm = {
+  id: number
+  name: string
+  slug: string
+  taxonomy: string
+}
+
 const readingTime = (content: string) => {
   const wordsPerMinute = 200
   const words = content.trim().split(/\s+/).length
   return Math.ceil(words / wordsPerMinute)
+}
+
+// Récupère les tags (taxonomie "post_tag") embarqués par l'API WordPress.
+// `wp:term` est un tableau de tableaux : catégories, tags, etc.
+function getPostTags(post: Post): WPTerm[] {
+  const embedded = post._embedded as unknown as
+    | { 'wp:term'?: WPTerm[][] }
+    | undefined
+
+  return (
+    embedded?.['wp:term']?.flat().filter((t) => t.taxonomy === 'post_tag') ?? []
+  )
 }
 
 // Coupe le HTML de l'article en deux moitiés, au niveau d'un paragraphe,
@@ -181,6 +200,9 @@ export default async function ArticlePage({
     .map((catId) => siteCategories.find((cat) => cat.id === catId))
     .filter((cat): cat is NonNullable<typeof cat> => Boolean(cat))
 
+  // Tags de l'article
+  const postTags = getPostTags(post)
+
   const authorName = post.content?.rendered?.includes('Thom Biakpa')
     ? 'Thomas Biakpa'
     : 'La Rédaction'
@@ -328,7 +350,22 @@ export default async function ArticlePage({
                   />
                 )}
 
-                {/* Tags / partage bas de page */}
+                {/* Tags de l'article */}
+                {postTags.length > 0 && (
+                  <div className='mt-8 sm:mt-10 flex flex-wrap items-center gap-2 font-arial'>
+                    {postTags.map((tag) => (
+                      <Link
+                        key={tag.id}
+                        href={`/tag/${tag.slug}`}
+                        className='max-w-full break-words rounded-full border border-agro-border px-3 py-1 text-xs text-agro-text-secondary hover:border-agro-green hover:text-agro-green transition-colors'
+                      >
+                        #{formatHtml(tag.name)}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
+                {/* Catégories / partage bas de page */}
                 <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-8 sm:mt-10 pt-6 border-t border-agro-border'>
                   {postCategories.length > 0 && (
                     <div className='flex flex-wrap gap-2 min-w-0'>

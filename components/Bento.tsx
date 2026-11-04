@@ -1,8 +1,5 @@
 import { categories, formatHtml, formatMediaDate } from '@/lib/utils'
-import {
-  getPostsByCategoryPaginated,
-  getPostsPaginated,
-} from '@/lib/wordpressApi'
+import { getPostsPaginated } from '@/lib/wordpressApi'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
