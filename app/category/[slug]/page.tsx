@@ -61,7 +61,7 @@ function ActualiteLayout({
 }) {
   return (
     <section className='mx-auto max-w-7xl px-4 py-12 sm:py-16'>
-      <h1 className='font-lora text-xl sm:text-2xl text-black mb-10 uppercase font-bold'>
+      <h1 className='font-lora text-xl sm:text-2xl text-black mb-10 uppercase font-bold break-words hyphens-auto'>
         Actualités
       </h1>
 
@@ -107,14 +107,14 @@ function ActualiteLayout({
 
                 <div className='flex-1 min-w-0 border-l-2 border-transparent group-hover:border-agro-green pl-5 transition-colors'>
                   <h2
-                    className='text-lg sm:text-xl font-medium text-agro-charcoal leading-snug group-hover:text-agro-green transition-colors'
+                    className='text-lg sm:text-xl font-medium text-agro-charcoal leading-snug group-hover:text-agro-green transition-colors break-words hyphens-auto'
                     dangerouslySetInnerHTML={{
                       __html: formatHtml(item.title.rendered),
                     }}
                   />
                   {item.excerpt?.rendered && (
                     <div
-                      className='mt-2 text-sm md:text-base text-stone-600 [&_p]:m-0 line-clamp-3'
+                      className='mt-2 text-sm md:text-base text-stone-600 [&_p]:m-0 line-clamp-3 break-words hyphens-auto [&_a]:[overflow-wrap:anywhere]'
                       dangerouslySetInnerHTML={{
                         __html: cleanWordPressExcerpt(item.excerpt.rendered),
                       }}
@@ -150,84 +150,31 @@ function PortraitInterviewLayout({
   currentPage: number
   totalPages: number
 }) {
-  const [featured, ...rest] = posts
-  if (!featured) {
-    return (
-      <section className='mx-auto max-w-8xl px-4 py-16'>
-        <h1 className='font-lora text-xl sm:text-2xl text-black mb-10 uppercase font-bold'>
-          Portraits
-        </h1>
-      </section>
-    )
-  }
-  const featuredImg = getImage(featured)
-
   return (
     <section className='mx-auto max-w-8xl px-4 py-12 sm:py-16'>
-      <h1 className='font-lora text-xl sm:text-2xl text-black mb-10 uppercase font-bold'>
+      <h1 className='font-lora text-xl sm:text-2xl text-black mb-10 uppercase font-bold break-words hyphens-auto'>
         Portraits
       </h1>
 
-      {/* Portrait vedette */}
-      <Link
-        href={`/article/${featured.slug}`}
-        className='group grid sm:grid-cols-5 gap-6 sm:gap-10 items-center mb-16'
-      >
-        <div className='sm:col-span-2 relative aspect-[4/5] overflow-hidden bg-agro-charcoal'>
-          {featuredImg ? (
-            <Image
-              src={featuredImg}
-              alt=''
-              fill
-              className='object-cover transition-transform duration-500 group-hover:scale-105'
-              priority
-              style={{
-                objectPosition:
-                  featured._embedded?.['wp:featuredmedia']?.[0]?.focus_point
-                    ?.object_position ?? '50% 50%',
-              }}
-            />
-          ) : (
-            <div className='absolute inset-0 flex items-center justify-center text-agro-white/40 font-lora text-5xl'>
-              {featured.title.rendered.replace(/<[^>]+>/g, '').charAt(0)}
-            </div>
-          )}
-        </div>
-        <div className='sm:col-span-3'>
-          <h2
-            className='font-lora text-2xl sm:text-3xl text-agro-charcoal leading-tight group-hover:text-agro-green transition-colors'
-            dangerouslySetInnerHTML={{
-              __html: formatHtml(featured.title.rendered),
-            }}
-          />
-          {featured.excerpt?.rendered && (
-            <div
-              className='mt-4 text-base text-stone-600 max-w-[60ch] italic font-lora [&_p]:m-0'
-              dangerouslySetInnerHTML={{
-                __html: cleanWordPressExcerpt(featured.excerpt.rendered),
-              }}
-            />
-          )}
-          <span className='inline-block mt-5 text-sm text-agro-green'>
-            {formatDate(featured.date)}
-          </span>
-        </div>
-      </Link>
-
       {/* Grille des autres portraits */}
-      <div className='grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10'>
-        {rest.map((item) => {
-          const img = getImage(item)
+      <div className='grid gap-y-10 sm:grid-cols-2 lg:grid-cols-3 divide-y sm:divide-y-0 divide-stone-200'>
+        {posts.map((item) => {
+          const itemImg = getImage(item)
           return (
             <Link
               key={item.id}
               href={`/article/${item.slug}`}
-              className='group block'
+              className={cn(
+                'group min-w-0 pt-6 sm:pt-0 sm:px-4',
+                'sm:[&:nth-child(2n)]:border-l sm:[&:nth-child(2n)]:border-stone-200',
+                'lg:[&:nth-child(3n+1)]:border-l-0',
+                'lg:[&:not(:nth-child(3n+1))]:border-l lg:[&:not(:nth-child(3n+1))]:border-stone-200',
+              )}
             >
-              <div className='relative aspect-[4/5] overflow-hidden bg-agro-charcoal mb-3'>
-                {img ? (
+              {itemImg && (
+                <div className='relative aspect-[16/10] w-full overflow-hidden bg-stone-100 mb-4'>
                   <Image
-                    src={img}
+                    src={itemImg}
                     alt=''
                     fill
                     className='object-cover transition-transform duration-500 group-hover:scale-105'
@@ -236,15 +183,15 @@ function PortraitInterviewLayout({
                         item._embedded?.['wp:featuredmedia']?.[0]?.focus_point
                           ?.object_position ?? '50% 50%',
                     }}
+                    sizes='(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
                   />
-                ) : (
-                  <div className='absolute inset-0 flex items-center justify-center text-agro-white/40 font-lora text-3xl'>
-                    {item.title.rendered.replace(/<[^>]+>/g, '').charAt(0)}
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
+              <span className='text-sm text-agro-orange'>
+                {formatDate(item.date)}
+              </span>
               <h3
-                className='text-base font-medium text-agro-charcoal leading-snug group-hover:text-agro-green transition-colors'
+                className='font-arial text-xl text-black mt-2 mb-3 group-hover:text-agro-green transition-colors line-clamp-2 break-words hyphens-auto'
                 dangerouslySetInnerHTML={{
                   __html: formatHtml(item.title.rendered),
                 }}
@@ -277,67 +224,22 @@ function DossierLayout({
   currentPage: number
   totalPages: number
 }) {
-  const [featured, ...rest] = posts
-  if (!featured) {
-    return (
-      <section className='mx-auto max-w-6xl px-4 py-16'>
-        <h1 className='font-lora text-xl sm:text-2xl text-black mb-10 uppercase font-bold'>
-          Dossiers
-        </h1>
-      </section>
-    )
-  }
-  const featuredImg = getImage(featured)
-
   return (
     <section className='mx-auto max-w-8xl px-4 py-12 sm:py-16'>
-      <h1 className='font-lora text-xl sm:text-2xl text-black mb-10 uppercase font-bold'>
+      <h1 className='font-lora text-xl sm:text-2xl text-black mb-10 uppercase font-bold break-words hyphens-auto'>
         Dossiers
       </h1>
 
-      {/* Dossier vedette, pleine largeur */}
-      <Link
-        href={`/article/${featured.slug}`}
-        className='group relative block aspect-[16/9] sm:aspect-[21/9] overflow-hidden bg-agro-charcoal mb-14'
-      >
-        {featuredImg && (
-          <Image
-            src={featuredImg}
-            alt=''
-            fill
-            className='object-cover opacity-80 transition-transform duration-500 group-hover:scale-105'
-            priority
-            style={{
-              objectPosition:
-                featured._embedded?.['wp:featuredmedia']?.[0]?.focus_point
-                  ?.object_position ?? '50% 50%',
-            }}
-          />
-        )}
-        <div className='absolute inset-0 bg-gradient-to-t from-agro-charcoal/90 via-agro-charcoal/20 to-transparent' />
-        <div className='absolute inset-x-0 bottom-0 p-6 sm:p-10 max-w-3xl'>
-          <h2
-            className='font-arial text-2xl sm:text-4xl text-agro-white leading-tight'
-            dangerouslySetInnerHTML={{
-              __html: formatHtml(featured.title.rendered),
-            }}
-          />
-          <span className='inline-block mt-4 text-sm text-agro-orange'>
-            {formatDate(featured.date)}
-          </span>
-        </div>
-      </Link>
-
       {/* Les autres dossiers, en colonnes de presse */}
       <div className='grid gap-y-10 sm:grid-cols-2 lg:grid-cols-3 divide-y sm:divide-y-0 divide-stone-200'>
-        {rest.map((item) => {
+        {posts.map((item) => {
           const itemImg = getImage(item)
           return (
             <Link
               key={item.id}
               href={`/article/${item.slug}`}
               className={cn(
-                'group pt-6 sm:pt-0 sm:px-4',
+                'group min-w-0 pt-6 sm:pt-0 sm:px-4',
                 'sm:[&:nth-child(2n)]:border-l sm:[&:nth-child(2n)]:border-stone-200',
                 'lg:[&:nth-child(3n+1)]:border-l-0',
                 'lg:[&:not(:nth-child(3n+1))]:border-l lg:[&:not(:nth-child(3n+1))]:border-stone-200',
@@ -363,14 +265,14 @@ function DossierLayout({
                 {formatDate(item.date)}
               </span>
               <h3
-                className='font-arial text-xl text-black mt-2 mb-3 group-hover:text-agro-green transition-colors line-clamp-2'
+                className='font-arial text-xl text-black mt-2 mb-3 group-hover:text-agro-green transition-colors line-clamp-2 break-words hyphens-auto'
                 dangerouslySetInnerHTML={{
                   __html: formatHtml(item.title.rendered),
                 }}
               />
               {item.excerpt?.rendered && (
                 <div
-                  className='text-sm text-stone-600 max-w-[45ch] [&_p]:m-0 line-clamp-3'
+                  className='text-sm text-stone-600 max-w-[45ch] [&_p]:m-0 line-clamp-3 break-words hyphens-auto [&_a]:[overflow-wrap:anywhere]'
                   dangerouslySetInnerHTML={{
                     __html: cleanWordPressExcerpt(item.excerpt.rendered),
                   }}
@@ -380,6 +282,92 @@ function DossierLayout({
           )
         })}
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        basePath={`/category/${slug}`}
+      />
+    </section>
+  )
+}
+
+/* ---------------------------------------------------------- */
+/* DEFAULT — mise en page générique pour toutes les autres     */
+/* catégories : grille simple, image + date + titre + extrait  */
+/* ---------------------------------------------------------- */
+function DefaultLayout({
+  title,
+  posts,
+  slug,
+  currentPage,
+  totalPages,
+}: {
+  title: string
+  posts: WPPost[]
+  slug: string
+  currentPage: number
+  totalPages: number
+}) {
+  return (
+    <section className='mx-auto max-w-7xl px-4 py-12 sm:py-16'>
+      <h1
+        className='font-lora text-xl sm:text-2xl text-black mb-10 uppercase font-bold break-words hyphens-auto'
+        dangerouslySetInnerHTML={{ __html: formatHtml(title) }}
+      />
+
+      {posts.length === 0 ? (
+        <p className='text-stone-600'>
+          Aucun article dans cette catégorie pour le moment.
+        </p>
+      ) : (
+        <div className='grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3'>
+          {posts.map((item) => {
+            const itemImg = getImage(item)
+            return (
+              <Link
+                key={item.id}
+                href={`/article/${item.slug}`}
+                className='group min-w-0'
+              >
+                {itemImg && (
+                  <div className='relative aspect-[16/10] w-full overflow-hidden rounded-md bg-stone-100 mb-4'>
+                    <Image
+                      src={itemImg}
+                      alt=''
+                      fill
+                      className='object-cover transition-transform duration-500 group-hover:scale-105'
+                      style={{
+                        objectPosition:
+                          item._embedded?.['wp:featuredmedia']?.[0]?.focus_point
+                            ?.object_position ?? '50% 50%',
+                      }}
+                      sizes='(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
+                    />
+                  </div>
+                )}
+                <span className='text-sm text-agro-orange'>
+                  {formatDate(item.date)}
+                </span>
+                <h2
+                  className='font-arial text-lg sm:text-xl text-black mt-2 mb-2 group-hover:text-agro-green transition-colors line-clamp-2 break-words hyphens-auto'
+                  dangerouslySetInnerHTML={{
+                    __html: formatHtml(item.title.rendered),
+                  }}
+                />
+                {item.excerpt?.rendered && (
+                  <div
+                    className='text-sm text-stone-600 [&_p]:m-0 line-clamp-3 break-words hyphens-auto [&_a]:[overflow-wrap:anywhere]'
+                    dangerouslySetInnerHTML={{
+                      __html: cleanWordPressExcerpt(item.excerpt.rendered),
+                    }}
+                  />
+                )}
+              </Link>
+            )
+          })}
+        </div>
+      )}
 
       <Pagination
         currentPage={currentPage}
@@ -453,7 +441,15 @@ export default async function Page({
         />
       )
     default:
-      return notFound()
+      return (
+        <DefaultLayout
+          title={findCategory.name}
+          posts={posts as WPPost[]}
+          slug={slug}
+          currentPage={currentPage}
+          totalPages={totalPages}
+        />
+      )
   }
 }
 

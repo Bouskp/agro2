@@ -6,7 +6,6 @@ import {
   categories as siteCategories,
   formatHtml,
   formatMediaDate,
-  cleanWordPressExcerpt,
 } from '@/lib/utils'
 import { Metadata } from 'next'
 import { Post } from '@/lib/wordpress'
@@ -176,7 +175,11 @@ export default async function ArticlePage({
 
   const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url
   const caption = post._embedded?.['wp:featuredmedia']?.[0]?.caption?.rendered
-  const category = siteCategories.find((item) => item.id == post.categories[0])
+
+  // Toutes les catégories de l'article (les IDs inconnus sont ignorés)
+  const postCategories = post.categories
+    .map((catId) => siteCategories.find((cat) => cat.id === catId))
+    .filter((cat): cat is NonNullable<typeof cat> => Boolean(cat))
 
   const authorName = post.content?.rendered?.includes('Thom Biakpa')
     ? 'Thomas Biakpa'
@@ -194,7 +197,7 @@ export default async function ArticlePage({
     splitContentInHalf(cleanedContent)
 
   const proseClassName =
-    'prose prose-sm sm:prose-base lg:prose-lg prose-neutral max-w-none font-arial leading-[1.7] text-black prose-headings:font-arial prose-headings:my-2 prose-headings:font-bold prose-headings:uppercase prose-a:text-agro-green hover:prose-a:underline prose-img:rounded-md prose-blockquote:border-agro-green prose-blockquote:font-lora prose-blockquote:not-italic prose-blockquote:text-lg sm:prose-blockquote:text-xl [&_p]:my-4 [&_ol:last-of-type]:text-sm [&_ol:last-of-type_li]:text-sm [&_ol:last-of-type_a]:text-sm prose-figcaption:italic prose-figcaption:text-sm'
+    'prose prose-sm sm:prose-base lg:prose-lg prose-neutral max-w-none font-arial leading-[1.7] text-black prose-headings:font-arial prose-headings:my-2 prose-headings:font-bold prose-headings:uppercase prose-a:text-agro-green hover:prose-a:underline prose-img:rounded-md prose-blockquote:border-agro-green prose-blockquote:font-lora prose-blockquote:not-italic prose-blockquote:text-lg sm:prose-blockquote:text-xl [&_p]:my-4 [&_ol:last-of-type]:text-sm [&_ol:last-of-type_li]:text-sm [&_ol:last-of-type_a]:text-sm prose-figcaption:italic prose-figcaption:text-sm break-words hyphens-auto [&_a]:[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto [&_pre]:overflow-x-auto [&_iframe]:max-w-full'
 
   return (
     <>
@@ -209,21 +212,24 @@ export default async function ArticlePage({
 
             {/* Colonne centrale : article */}
             <div className='min-w-0'>
-              {/* Fil d'ariane / catégorie */}
-              <div className='flex items-center gap-3 font-arial text-xs'>
-                {category && (
-                  <Link
-                    href={`/category/${category.slug.toLocaleLowerCase()}`}
-                    className='font-bold uppercase tracking-wide text-agro-green'
-                  >
-                    {formatHtml(category.name)}
-                  </Link>
-                )}
-              </div>
+              {/* Fil d'ariane / catégories */}
+              {postCategories.length > 0 && (
+                <div className='flex flex-wrap items-center gap-x-3 gap-y-1 font-arial text-xs'>
+                  {postCategories.map((cat) => (
+                    <Link
+                      key={cat.id}
+                      href={`/category/${cat.slug.toLowerCase()}`}
+                      className='max-w-full break-words font-bold uppercase tracking-wide text-agro-green hover:underline'
+                    >
+                      {formatHtml(cat.name)}
+                    </Link>
+                  ))}
+                </div>
+              )}
 
               {/* Titre */}
               <h1
-                className='font-lora text-xl sm:text-2xl md:text-4xl md:leading-[1.30] font-bold text-agro-text mt-3'
+                className='font-lora text-xl sm:text-2xl md:text-4xl md:leading-[1.30] font-bold text-agro-text mt-3 break-words hyphens-auto'
                 dangerouslySetInnerHTML={{
                   __html: formatHtml(post.title.rendered),
                 }}
@@ -271,7 +277,7 @@ export default async function ArticlePage({
                   </div>
                   {caption && (
                     <p
-                      className='font-arial text-xs text-agro-text-muted italic mt-2'
+                      className='font-arial text-xs text-agro-text-muted italic mt-2 break-words'
                       dangerouslySetInnerHTML={{ __html: formatHtml(caption) }}
                     />
                   )}
@@ -324,13 +330,18 @@ export default async function ArticlePage({
 
                 {/* Tags / partage bas de page */}
                 <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-8 sm:mt-10 pt-6 border-t border-agro-border'>
-                  {category && (
-                    <Link
-                      href={`/category/${category.slug}`}
-                      className='self-start font-arial text-xs font-bold uppercase tracking-wide text-agro-green-dark bg-agro-green/10 px-3 py-1.5 rounded-full'
-                    >
-                      {category.name}
-                    </Link>
+                  {postCategories.length > 0 && (
+                    <div className='flex flex-wrap gap-2 min-w-0'>
+                      {postCategories.map((cat) => (
+                        <Link
+                          key={cat.id}
+                          href={`/category/${cat.slug.toLowerCase()}`}
+                          className='max-w-full break-words font-arial text-xs font-bold uppercase tracking-wide text-agro-green-dark bg-agro-green/10 px-3 py-1.5 rounded-full hover:bg-agro-green/20 transition-colors'
+                        >
+                          {formatHtml(cat.name)}
+                        </Link>
+                      ))}
+                    </div>
                   )}
                   <ShareButtons />
                 </div>

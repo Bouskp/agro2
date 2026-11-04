@@ -8,15 +8,17 @@ export default async function LatestArticles({
   excludeSlug?: string
 }) {
   const results = await Promise.all(
-    categories.map(async (cat) => {
-      const { data } = await getPostsByCategoryPaginated(cat.id, 1, 6)
-      return data.map((item) => ({
-        ...item,
-        categoryId: cat.id,
-        categorySlug: cat.slug,
-        categoryTitle: cat.name,
-      }))
-    }),
+    categories
+      .filter((cat) => !cat.isChild)
+      .map(async (cat) => {
+        const { data } = await getPostsByCategoryPaginated(cat.id, 1, 6)
+        return data.map((item) => ({
+          ...item,
+          categoryId: cat.id,
+          categorySlug: cat.slug,
+          categoryTitle: cat.name,
+        }))
+      }),
   )
 
   const merged: ArticleItem[] = results
@@ -28,7 +30,10 @@ export default async function LatestArticles({
   return (
     <section className='w-full py-12 md:py-16'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        <LatestArticlesFilter articles={merged} categories={categories} />
+        <LatestArticlesFilter
+          articles={merged}
+          categories={categories.filter((cat) => !cat.isChild)}
+        />
       </div>
     </section>
   )

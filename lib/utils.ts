@@ -9,7 +9,7 @@ export const categories = [
   {
     id: 109,
     slug: 'portraits',
-    name: formatHtml('Portraits'),
+    name: 'Portraits',
   },
   {
     id: 108,
@@ -20,6 +20,30 @@ export const categories = [
     id: 110,
     slug: 'actualite',
     name: 'Actualités',
+  },
+  {
+    id: 141,
+    name: 'Innovation et Durabilité',
+    slug: 'innovation-et-durabilite',
+    isChild: true,
+  },
+  {
+    id: 138,
+    name: 'Investissements et industrialisation',
+    slug: 'investissements-et-industrialisation',
+    isChild: true,
+  },
+  {
+    name: 'Marchés et filières',
+    slug: 'marches-et-filieres',
+    id: 139,
+    isChild: true,
+  },
+  {
+    id: 140,
+    name: 'Politiques agricoles et réglementation',
+    slug: 'politiques-agricoles-et-reglementation',
+    isChild: true,
   },
 ]
 
