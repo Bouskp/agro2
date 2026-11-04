@@ -1,5 +1,8 @@
 import { categories, formatHtml, formatMediaDate } from '@/lib/utils'
-import { getPostsByCategoryPaginated } from '@/lib/wordpressApi'
+import {
+  getPostsByCategoryPaginated,
+  getPostsPaginated,
+} from '@/lib/wordpressApi'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -43,7 +46,7 @@ export default async function BentoContainer({
 }: {
   rubrique: Rubrique
 }) {
-  const { data: posts } = await getPostsByCategoryPaginated(rubrique.id)
+  const { data: posts } = await getPostsPaginated(1, 5)
   const rubriqueUrl = `/category/${rubrique.slug}`
 
   return (
