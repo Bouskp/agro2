@@ -271,15 +271,24 @@ export default async function ArticlePage({
             <div className='min-w-0'>
               {/* Fil d'ariane / catégories */}
               {postCategories.length > 0 && (
-                <div className='flex flex-wrap items-center gap-x-3 gap-y-1 font-arial text-xs'>
-                  {postCategories.map((cat) => (
-                    <Link
-                      key={cat.id}
-                      href={`/category/${cat.slug.toLowerCase()}`}
-                      className={`max-w-full break-words font-bold hover:underline ${getCategoryStyle(cat.slug).text}`}
-                    >
-                      {formatHtml(cat.name)}
-                    </Link>
+                <div className='flex flex-wrap items-center gap-x-2 gap-y-1 font-arial text-sm'>
+                  {postCategories.map((cat, index) => (
+                    <span key={cat.id} className='flex items-center gap-x-2'>
+                      {index > 0 && (
+                        <span
+                          aria-hidden='true'
+                          className='text-agro-text-muted'
+                        >
+                          /
+                        </span>
+                      )}
+                      <Link
+                        href={`/category/${cat.slug.toLowerCase()}`}
+                        className={`max-w-full break-words font-bold hover:underline ${getCategoryStyle(cat.slug).text}`}
+                      >
+                        {formatHtml(cat.name)}
+                      </Link>
+                    </span>
                   ))}
                 </div>
               )}
