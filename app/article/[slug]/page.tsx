@@ -14,6 +14,46 @@ import { Link2 } from 'lucide-react'
 import { FaFacebook as Facebook, FaLinkedin as Linkedin } from 'react-icons/fa6'
 import publicite from '@/app/images/pub.png'
 
+// Une couleur par catégorie (classes écrites en entier pour Tailwind).
+const CATEGORY_STYLES: Record<string, { text: string; pill: string }> = {
+  portraits: {
+    text: 'text-purple-700',
+    pill: 'text-purple-700 border-purple-300 hover:bg-purple-50',
+  },
+  dossier: {
+    text: 'text-blue-700',
+    pill: 'text-blue-700 border-blue-300 hover:bg-blue-50',
+  },
+  actualite: {
+    text: 'text-agro-green',
+    pill: 'text-agro-green-dark border-agro-green/40 hover:bg-agro-green/10',
+  },
+  'innovation-et-durabilite': {
+    text: 'text-teal-700',
+    pill: 'text-teal-700 border-teal-300 hover:bg-teal-50',
+  },
+  'investissements-et-industrialisation': {
+    text: 'text-rose-700',
+    pill: 'text-rose-700 border-rose-300 hover:bg-rose-50',
+  },
+  'marches-et-filieres': {
+    text: 'text-amber-700',
+    pill: 'text-amber-700 border-amber-300 hover:bg-amber-50',
+  },
+  'politiques-agricoles-et-reglementation': {
+    text: 'text-indigo-700',
+    pill: 'text-indigo-700 border-indigo-300 hover:bg-indigo-50',
+  },
+}
+
+const DEFAULT_CATEGORY_STYLE = {
+  text: 'text-agro-green',
+  pill: 'text-agro-green-dark border-agro-green/40 hover:bg-agro-green/10',
+}
+
+const getCategoryStyle = (slug: string) =>
+  CATEGORY_STYLES[slug.toLowerCase()] ?? DEFAULT_CATEGORY_STYLE
+
 type WPTerm = {
   id: number
   name: string
@@ -241,7 +281,7 @@ export default async function ArticlePage({
                     <Link
                       key={cat.id}
                       href={`/category/${cat.slug.toLowerCase()}`}
-                      className='max-w-full break-words font-bold uppercase tracking-wide text-agro-green hover:underline'
+                      className={`max-w-full break-words font-bold hover:underline ${getCategoryStyle(cat.slug).text}`}
                     >
                       {formatHtml(cat.name)}
                     </Link>
@@ -373,7 +413,7 @@ export default async function ArticlePage({
                         <Link
                           key={cat.id}
                           href={`/category/${cat.slug.toLowerCase()}`}
-                          className='max-w-full break-words font-arial text-xs font-bold uppercase tracking-wide text-agro-green-dark bg-agro-green/10 px-3 py-1.5 rounded-full hover:bg-agro-green/20 transition-colors'
+                          className={`max-w-full break-words rounded-full border px-3 py-1.5 font-arial text-xs font-medium transition-colors ${getCategoryStyle(cat.slug).pill}`}
                         >
                           {formatHtml(cat.name)}
                         </Link>
