@@ -15,40 +15,35 @@ import { FaFacebook as Facebook, FaLinkedin as Linkedin } from 'react-icons/fa6'
 import publicite from '@/app/images/pub.png'
 
 // Une couleur par catégorie (classes écrites en entier pour Tailwind).
+
+// Une couleur par catégorie (classes écrites en entier pour Tailwind).
+const STYLE_ACTUALITE = {
+  text: 'text-agro-green-dark',
+  pill: 'text-agro-green-dark border-agro-green-dark/40 hover:bg-agro-green-dark/10',
+}
+const STYLE_DOSSIER = {
+  text: 'text-agro-charcoal',
+  pill: 'text-agro-charcoal border-agro-charcoal/40 hover:bg-agro-charcoal/10',
+}
+const STYLE_PORTRAITS = {
+  text: 'text-agro-orange-dark',
+  pill: 'text-agro-orange-dark border-agro-orange-dark/40 hover:bg-agro-orange-dark/10',
+}
+
 const CATEGORY_STYLES: Record<string, { text: string; pill: string }> = {
-  portraits: {
-    text: 'text-purple-700',
-    pill: 'text-purple-700 border-purple-300 hover:bg-purple-50',
-  },
-  dossier: {
-    text: 'text-blue-700',
-    pill: 'text-blue-700 border-blue-300 hover:bg-blue-50',
-  },
-  actualite: {
-    text: 'text-agro-green',
-    pill: 'text-agro-green-dark border-agro-green/40 hover:bg-agro-green/10',
-  },
-  'innovation-et-durabilite': {
-    text: 'text-teal-700',
-    pill: 'text-teal-700 border-teal-300 hover:bg-teal-50',
-  },
-  'investissements-et-industrialisation': {
-    text: 'text-rose-700',
-    pill: 'text-rose-700 border-rose-300 hover:bg-rose-50',
-  },
-  'marches-et-filieres': {
-    text: 'text-amber-700',
-    pill: 'text-amber-700 border-amber-300 hover:bg-amber-50',
-  },
-  'politiques-agricoles-et-reglementation': {
-    text: 'text-indigo-700',
-    pill: 'text-indigo-700 border-indigo-300 hover:bg-indigo-50',
-  },
+  portraits: STYLE_PORTRAITS,
+  dossier: STYLE_DOSSIER,
+  actualite: STYLE_ACTUALITE,
+  // Sous-catégories : elles héritent de la couleur de Dossier
+  'innovation-et-durabilite': STYLE_DOSSIER,
+  'investissements-et-industrialisation': STYLE_DOSSIER,
+  'marches-et-filieres': STYLE_DOSSIER,
+  'politiques-agricoles-et-reglementation': STYLE_DOSSIER,
 }
 
 const DEFAULT_CATEGORY_STYLE = {
-  text: 'text-agro-green',
-  pill: 'text-agro-green-dark border-agro-green/40 hover:bg-agro-green/10',
+  text: 'text-agro-text-secondary',
+  pill: 'text-agro-text-secondary border-agro-border hover:bg-agro-background',
 }
 
 const getCategoryStyle = (slug: string) =>
