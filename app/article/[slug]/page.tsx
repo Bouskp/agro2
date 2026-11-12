@@ -254,7 +254,7 @@ export default async function ArticlePage({
     splitContentInHalf(cleanedContent)
 
   const proseClassName =
-    'prose prose-sm sm:prose-base lg:prose-lg prose-neutral max-w-none font-arial leading-[1.7] text-black prose-headings:font-arial prose-headings:my-2 prose-headings:font-bold prose-headings:uppercase prose-a:text-agro-green hover:prose-a:underline prose-img:rounded-md prose-blockquote:border-agro-green prose-blockquote:font-lora prose-blockquote:not-italic prose-blockquote:text-lg sm:prose-blockquote:text-xl [&_p]:my-4 [&_ol:last-of-type]:text-sm [&_ol:last-of-type_li]:text-sm [&_ol:last-of-type_a]:text-sm prose-figcaption:italic prose-figcaption:text-sm break-words hyphens-auto [&_a]:[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto [&_pre]:overflow-x-auto [&_iframe]:max-w-full'
+    'prose prose-sm sm:prose-base lg:prose-lg prose-neutral max-w-none font-arial leading-[1.7] text-black prose-headings:font-arial prose-headings:my-2 prose-headings:font-bold prose-headings:lowercase [&_:is(h2,h3,h4)]:first-letter:uppercase prose-a:text-agro-green hover:prose-a:underline prose-img:rounded-md prose-blockquote:border-agro-green prose-blockquote:font-lora prose-blockquote:not-italic prose-blockquote:text-lg sm:prose-blockquote:text-xl [&_p]:my-4 [&_ol:last-of-type]:text-sm [&_ol:last-of-type_li]:text-sm [&_ol:last-of-type_a]:text-sm prose-figcaption:italic prose-figcaption:text-sm break-words hyphens-auto [&_a]:[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto [&_pre]:overflow-x-auto [&_iframe]:max-w-full'
 
   return (
     <>
