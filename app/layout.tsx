@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import type { Metadata } from 'next'
 import AdBanner from '@/components/AdBanner'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' })
 
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         {children}
         <WhatsAppButton />
         <Footer />
+        <GoogleAnalytics gaId='G-Q2TWJVV9QR' />
       </body>
     </html>
   )
