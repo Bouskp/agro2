@@ -9,6 +9,15 @@ import logoTv from '../app/images/mianTv.png'
 // Structure de la playlist (remplacer par vos vraies données/API)
 const tvPlaylist = [
   {
+    id: '4',
+    title:
+      'Du produit local à la marque établie : les clés de la réussite - Avec Asnath Logon Adjé (Lya Bissap)',
+    duration: '1:20:00',
+    youtubeId: 'bZ5NQ0I90IU',
+    description:
+      "Comment transformer un produit local en une véritable marque, capable de se différencier, de conquérir son marché et de s'inscrire durablement dans les habitudes des consommateurs ? Dans ce nouvel épisode d'AgroMakers – Le Podcast, nous recevons Asnath Logon Adjé, cofondatrice et gérante de Saveurs Natures d'Éburnie, une entreprise ivoirienne spécialisée dans la valorisation et la transformation du bissap, notamment à travers sa marque LYA'BISSAP. À travers son parcours entrepreneurial, nous nous intéressons aux défis de la transformation agroalimentaire locale et à la construction d'une marque autour d'un produit traditionnel.De la conception du produit à sa commercialisation, en passant par les exigences de qualité, le positionnement, l'identité de marque et le développement des marchés, cette rencontre propose un éclairage sur les différentes dimensions de l'entrepreneuriat agroalimentaire. Au-delà du parcours de l'entrepreneure, cet épisode invite à réfléchir à une question essentielle : comment créer davantage de valeur à partir de nos ressources locales et construire des entreprises compétitives et durables ? Un échange destiné aux entrepreneurs, porteurs de projets, professionnels de l'agro-industrie et à toutes celles et ceux qui s'intéressent à la transformation des économies agricoles africaines.",
+  },
+  {
     id: '3',
     title:
       'Créer une entreprise agricole en Afrique : ce qu’il faut vraiment savoir - Avec Daniel Oulaï',
